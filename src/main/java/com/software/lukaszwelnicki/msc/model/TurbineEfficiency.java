@@ -12,8 +12,7 @@ import java.util.Date;
 public class TurbineEfficiency extends Measurement{
     private double turbineEfficiency;
 
-    public TurbineEfficiency(String id, Date createdDate, double turbineEfficiency) {
-        super(id, createdDate);
+    public TurbineEfficiency(double turbineEfficiency) {
         this.turbineEfficiency = turbineEfficiency;
     }
 }

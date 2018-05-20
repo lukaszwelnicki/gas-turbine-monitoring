@@ -13,8 +13,7 @@ import java.util.Date;
 public class CompressorEfficiency extends Measurement {
     private double compressorEfficiency;
 
-    public CompressorEfficiency(String id, Date createdDate, double compressorEfficiency) {
-        super(id, createdDate);
+    public CompressorEfficiency(double compressorEfficiency) {
         this.compressorEfficiency = compressorEfficiency;
     }
 }

@@ -16,13 +16,10 @@ public class GeneratorVibrations extends Measurement {
     private double vibrationThree;
     private double vibrationFour;
 
-    public GeneratorVibrations(String id,
-                             Date createdDate,
-                             double vibrationOne,
-                             double vibrationTwo,
-                             double vibrationThree,
-                             double vibrationFour) {
-        super(id, createdDate);
+    public GeneratorVibrations( double vibrationOne,
+                                double vibrationTwo,
+                                double vibrationThree,
+                                double vibrationFour) {
         this.vibrationOne = vibrationOne;
         this.vibrationTwo = vibrationTwo;
         this.vibrationThree = vibrationThree;

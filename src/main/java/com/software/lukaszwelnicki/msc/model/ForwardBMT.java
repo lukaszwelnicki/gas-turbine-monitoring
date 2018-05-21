@@ -17,13 +17,10 @@ public class ForwardBMT extends Measurement {
     private double temperatureThree;
     private double temperatureFour;
 
-    public ForwardBMT(String id,
-                      Date createdDate,
-                      double temperatureOne,
+    public ForwardBMT(double temperatureOne,
                       double temperatureTwo,
                       double temperatureThree,
                       double temperatureFour) {
-        super(id, createdDate);
         this.temperatureOne = temperatureOne;
         this.temperatureTwo = temperatureTwo;
         this.temperatureThree = temperatureThree;

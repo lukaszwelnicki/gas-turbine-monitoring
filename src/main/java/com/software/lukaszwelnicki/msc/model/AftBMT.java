@@ -16,13 +16,10 @@ public class AftBMT extends Measurement {
     private double temperatureThree;
     private double temperatureFour;
 
-    public AftBMT(String id,
-                  Date createdDate,
-                  double temperatureOne,
+    public AftBMT(double temperatureOne,
                   double temperatureTwo,
                   double temperatureThree,
                   double temperatureFour) {
-        super(id, createdDate);
         this.temperatureOne = temperatureOne;
         this.temperatureTwo = temperatureTwo;
         this.temperatureThree = temperatureThree;

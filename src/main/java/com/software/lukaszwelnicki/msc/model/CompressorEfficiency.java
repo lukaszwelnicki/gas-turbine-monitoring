@@ -13,6 +13,9 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = "compressor_efficiency")
 public class CompressorEfficiency extends Measurement {
+    private static final double MIDDLE_VALUE = 88.0;
+    private static final double SPREAD =
+
     private double compressorEfficiency;
 
     public CompressorEfficiency(double compressorEfficiency) {

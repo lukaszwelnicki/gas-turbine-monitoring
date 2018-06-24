@@ -1,5 +1,6 @@
 package com.software.lukaszwelnicki.msc.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

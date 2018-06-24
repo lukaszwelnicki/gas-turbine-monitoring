@@ -1,5 +1,6 @@
 package com.software.lukaszwelnicki.msc.bootstrap;
 
+import com.software.lukaszwelnicki.msc.model.*;
 import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,12 +14,19 @@ public class DatabaseInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if(measurementRepository.count().block().equals(0)) {
-            bootstrapDB(100);
+            bootstrapDB(1000);
         }
     }
 
-    private void bootstrapDB(int i) {
-        
+    private void bootstrapDB(int numberOfRecords) {
+        for(int i = 0; i < numberOfRecords; i++) {
+            measurementRepository.save(AftBMT.random());
+            measurementRepository.save(CompressorEfficiency.random());
+            measurementRepository.save(ForwardBMT.random());
+            measurementRepository.save(GeneratorVibrations.random());
+            measurementRepository.save(TurbineEfficiency.random());
+            measurementRepository.save(TurbineVibrations.random());
+        }
     }
 
     @Autowired

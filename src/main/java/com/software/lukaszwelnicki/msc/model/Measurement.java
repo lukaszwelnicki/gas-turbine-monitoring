@@ -1,6 +1,6 @@
 package com.software.lukaszwelnicki.msc.model;
 
-import lombok.NoArgConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-@NoArgConstructor
+@NoArgsConstructor
 abstract public class Measurement {
 
     @Id

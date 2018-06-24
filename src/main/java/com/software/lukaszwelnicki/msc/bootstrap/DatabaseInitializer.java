@@ -12,7 +12,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if(measurementRepository.count().block() == 0){
+        if(measurementRepository.count().block().equals(0)) {
 
         }
     }

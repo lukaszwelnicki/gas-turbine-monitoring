@@ -21,10 +21,10 @@ public class AftBMT extends Measurement {
     private double temperatureFour;
 
     public static AftBMT random() {
-        double temperatureOne = RandomUtils.randomMiddleAndSpread(AftBMT.MIDDLE_VALUE, AftBMT.SPREAD);
-        double temperatureTwo = RandomUtils.randomMiddleAndSpread(AftBMT.MIDDLE_VALUE, AftBMT.SPREAD);
-        double temperatureThree = RandomUtils.randomMiddleAndSpread(AftBMT.MIDDLE_VALUE, AftBMT.SPREAD);
-        double temperatureFour = RandomUtils.randomMiddleAndSpread(AftBMT.MIDDLE_VALUE, AftBMT.SPREAD);
+        double temperatureOne = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
+        double temperatureTwo = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
+        double temperatureThree = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
+        double temperatureFour = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         return new AftBMT(temperatureOne, temperatureTwo, temperatureThree, temperatureFour);
     }
 }

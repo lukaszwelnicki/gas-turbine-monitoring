@@ -13,8 +13,12 @@ public class DatabaseInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if(measurementRepository.count().block().equals(0)) {
-
+            bootstrapDB(100);
         }
+    }
+
+    private void bootstrapDB(int i) {
+        
     }
 
     @Autowired

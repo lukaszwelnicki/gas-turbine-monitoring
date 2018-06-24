@@ -1,12 +1,10 @@
 package com.software.lukaszwelnicki.msc.model;
 
-
+import com.software.lukaszwelnicki.msc.utils.RandomUtils;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
 
 @Data
 @Builder
@@ -14,18 +12,19 @@ import java.util.Date;
 @Document(collection = "forward_bmt")
 public class ForwardBMT extends Measurement {
 
+    private static final double MIDDLE_VALUE = 150.0;
+    private static final double SPREAD = 10.0;
+
     private double temperatureOne;
     private double temperatureTwo;
     private double temperatureThree;
     private double temperatureFour;
 
-    public ForwardBMT(double temperatureOne,
-                      double temperatureTwo,
-                      double temperatureThree,
-                      double temperatureFour) {
-        this.temperatureOne = temperatureOne;
-        this.temperatureTwo = temperatureTwo;
-        this.temperatureThree = temperatureThree;
-        this.temperatureFour = temperatureFour;
+    public static ForwardBMT random() {
+        double temperatureOne = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
+        double temperatureTwo = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
+        double temperatureThree = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
+        double temperatureFour = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
+        return new ForwardBMT(temperatureOne, temperatureTwo, temperatureThree, temperatureFour);
     }
 }

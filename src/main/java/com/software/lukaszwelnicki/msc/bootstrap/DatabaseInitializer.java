@@ -30,7 +30,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         generators.add(new DataGenerator<>(new GeneratorVibrations()));
         generators.add(new DataGenerator<>(new TurbineEfficiency()));
         generators.add(new DataGenerator<>(new TurbineVibrations()));
-        generators.forEach(g -> g.generateRecordsInBetweenDates(start, end, secondsBetweenRecords));
+        generators.forEach(g -> measurementRepository.saveAll(g.generateRecordsInBetweenDates(start, end, secondsBetweenRecords)));
     }
 
 

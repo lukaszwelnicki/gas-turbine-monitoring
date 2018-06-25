@@ -1,15 +1,14 @@
 package com.software.lukaszwelnicki.msc.model;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = "generator_vibrations")
 public class GeneratorVibrations extends Measurement {
@@ -22,7 +21,7 @@ public class GeneratorVibrations extends Measurement {
     private double vibrationThree;
     private double vibrationFour;
 
-    public static GeneratorVibrations random() {
+    public GeneratorVibrations random() {
         double vibrationOne = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         double vibrationTwo = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         double vibrationThree = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);

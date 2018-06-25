@@ -1,13 +1,13 @@
 package com.software.lukaszwelnicki.msc.model;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = "aft_bmt")
 public class AftBMT extends Measurement {
@@ -20,7 +20,7 @@ public class AftBMT extends Measurement {
     private double temperatureThree;
     private double temperatureFour;
 
-    public static AftBMT random() {
+    public AftBMT random() {
         double temperatureOne = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         double temperatureTwo = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         double temperatureThree = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);

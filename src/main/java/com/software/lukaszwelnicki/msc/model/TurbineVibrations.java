@@ -1,15 +1,14 @@
 package com.software.lukaszwelnicki.msc.model;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = "turbine_vibrations")
 public class TurbineVibrations extends Measurement {
@@ -22,7 +21,7 @@ public class TurbineVibrations extends Measurement {
     private double vibrationThree;
     private double vibrationFour;
 
-    public static TurbineVibrations random() {
+    public TurbineVibrations random() {
         double vibrationOne = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         double vibrationTwo = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         double vibrationThree = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);

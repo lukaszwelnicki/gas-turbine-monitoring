@@ -21,4 +21,5 @@ public class TurbineEfficiency extends Measurement{
     public TurbineEfficiency random() {
         return new TurbineEfficiency(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
     }
+
 }

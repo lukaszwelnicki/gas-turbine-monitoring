@@ -28,4 +28,5 @@ public class GeneratorVibrations extends Measurement {
         double vibrationFour = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         return new GeneratorVibrations(vibrationOne, vibrationTwo, vibrationThree, vibrationFour);
     }
+
 }

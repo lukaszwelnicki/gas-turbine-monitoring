@@ -25,4 +25,5 @@ public class DataGenerator<T extends Measurement> {
     public DataGenerator(T measurement) {
         this.measurement = measurement;
     }
+
 }

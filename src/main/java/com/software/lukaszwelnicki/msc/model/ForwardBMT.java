@@ -26,4 +26,5 @@ public class ForwardBMT extends Measurement {
         double temperatureFour = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         return new ForwardBMT(temperatureOne, temperatureTwo, temperatureThree, temperatureFour);
     }
+
 }

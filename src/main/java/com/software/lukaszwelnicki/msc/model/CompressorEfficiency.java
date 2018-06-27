@@ -22,4 +22,5 @@ public class CompressorEfficiency extends Measurement {
     public CompressorEfficiency random() {
         return new CompressorEfficiency(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
     }
+
 }

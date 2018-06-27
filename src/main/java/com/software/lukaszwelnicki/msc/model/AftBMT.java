@@ -27,4 +27,5 @@ public class AftBMT extends Measurement {
         double temperatureFour = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
         return new AftBMT(temperatureOne, temperatureTwo, temperatureThree, temperatureFour);
     }
+
 }

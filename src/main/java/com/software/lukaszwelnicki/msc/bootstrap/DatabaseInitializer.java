@@ -22,27 +22,27 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final MeasurementRepository<TurbineEfficiency> turbineEfficiencyMeasurementRepository;
     private final MeasurementRepository<TurbineVibrations> turbineVibrationsMeasurementRepository;
 
-    private final Map<DataGenerator, MeasurementRepository> repositoriesWithGenerators = new HashMap<>();
+    private final Map<DataGenerator, MeasurementRepository> dataGeneratorMeasurementRepositoryHashMap = new HashMap<>();
 
     @Override
     public void run(String... args) throws Exception {
         fillRepositoryGeneratorMap();
-        repositoriesWithGenerators.forEach((generator, repository) -> repository.deleteAll().then().block());
+        dataGeneratorMeasurementRepositoryHashMap.forEach((generator, repository) -> repository.deleteAll().then().block());
         bootstrapDB(LocalDateTime.now().minusDays(1), LocalDateTime.now(), 15);
     }
 
     private void bootstrapDB(LocalDateTime start, LocalDateTime end, int secondsBetweenRecords) {
-        repositoriesWithGenerators.forEach(((generator, repository) ->
+        dataGeneratorMeasurementRepositoryHashMap.forEach(((generator, repository) ->
                 repository.saveAll(generator.generateRecordsInBetweenDates(start, end, secondsBetweenRecords)).blockFirst()));
     }
 
     private void fillRepositoryGeneratorMap() {
-        repositoriesWithGenerators.put(new DataGenerator<>(new AftBMT()), aftBMTMeasurementRepository);
-        repositoriesWithGenerators.put(new DataGenerator<>(new CompressorEfficiency()), compressorEfficiencyMeasurementRepository);
-        repositoriesWithGenerators.put(new DataGenerator<>(new ForwardBMT()), forwardBMTMeasurementRepository);
-        repositoriesWithGenerators.put(new DataGenerator<>(new GeneratorVibrations()), generatorVibrationsMeasurementRepository);
-        repositoriesWithGenerators.put(new DataGenerator<>(new TurbineEfficiency()), turbineEfficiencyMeasurementRepository);
-        repositoriesWithGenerators.put(new DataGenerator<>(new TurbineVibrations()), turbineVibrationsMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new AftBMT()), aftBMTMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new CompressorEfficiency()), compressorEfficiencyMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new ForwardBMT()), forwardBMTMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new GeneratorVibrations()), generatorVibrationsMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new TurbineEfficiency()), turbineEfficiencyMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new TurbineVibrations()), turbineVibrationsMeasurementRepository);
     }
 
     public DatabaseInitializer(MeasurementRepository<AftBMT> aftBMTMeasurementRepository,

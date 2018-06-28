@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -21,28 +22,27 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final MeasurementRepository<TurbineEfficiency> turbineEfficiencyMeasurementRepository;
     private final MeasurementRepository<TurbineVibrations> turbineVibrationsMeasurementRepository;
 
-    private final Map<MeasurementRepository, DataGenerator> repositoriesWithGenerators = new HashMap<>();
+    private final Map<DataGenerator, MeasurementRepository> repositoriesWithGenerators = new HashMap<>();
 
     @Override
     public void run(String... args) throws Exception {
         fillRepositoryGeneratorMap();
-        repositoriesWithGenerators.forEach((repository, generator) -> repository.deleteAll().block());
-        bootstrapDB(LocalDateTime.now().minusMonths(3), LocalDateTime.now(), 15);
-        log.info("Finished bootstrap. Number of recorts in one table: " + aftBMTMeasurementRepository.findAll().count().block());
+        repositoriesWithGenerators.forEach((generator, repository) -> repository.deleteAll().then().block());
+        bootstrapDB(LocalDateTime.now().minusDays(1), LocalDateTime.now(), 15);
     }
 
     private void bootstrapDB(LocalDateTime start, LocalDateTime end, int secondsBetweenRecords) {
-        repositoriesWithGenerators.forEach(((repository, generator) ->
-                repository.saveAll(generator.generateRecordsInBetweenDates(start, end, secondsBetweenRecords))));
+        repositoriesWithGenerators.forEach(((generator, repository) ->
+                repository.saveAll(generator.generateRecordsInBetweenDates(start, end, secondsBetweenRecords)).blockFirst()));
     }
 
     private void fillRepositoryGeneratorMap() {
-        repositoriesWithGenerators.put(aftBMTMeasurementRepository, new DataGenerator<>(new AftBMT()));
-        repositoriesWithGenerators.put(compressorEfficiencyMeasurementRepository, new DataGenerator<>(new CompressorEfficiency()));
-        repositoriesWithGenerators.put(forwardBMTMeasurementRepository, new DataGenerator<>(new ForwardBMT()));
-        repositoriesWithGenerators.put(generatorVibrationsMeasurementRepository, new DataGenerator<>(new GeneratorVibrations()));
-        repositoriesWithGenerators.put(turbineEfficiencyMeasurementRepository, new DataGenerator<>(new TurbineEfficiency()));
-        repositoriesWithGenerators.put(turbineVibrationsMeasurementRepository, new DataGenerator<>(new TurbineVibrations()));
+        repositoriesWithGenerators.put(new DataGenerator<>(new AftBMT()), aftBMTMeasurementRepository);
+        repositoriesWithGenerators.put(new DataGenerator<>(new CompressorEfficiency()), compressorEfficiencyMeasurementRepository);
+        repositoriesWithGenerators.put(new DataGenerator<>(new ForwardBMT()), forwardBMTMeasurementRepository);
+        repositoriesWithGenerators.put(new DataGenerator<>(new GeneratorVibrations()), generatorVibrationsMeasurementRepository);
+        repositoriesWithGenerators.put(new DataGenerator<>(new TurbineEfficiency()), turbineEfficiencyMeasurementRepository);
+        repositoriesWithGenerators.put(new DataGenerator<>(new TurbineVibrations()), turbineVibrationsMeasurementRepository);
     }
 
     public DatabaseInitializer(MeasurementRepository<AftBMT> aftBMTMeasurementRepository,

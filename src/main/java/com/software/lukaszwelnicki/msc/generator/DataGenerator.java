@@ -6,10 +6,11 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DataGenerator<T extends Measurement> {
 
-    private T measurement;
+    private final T measurement;
 
     public List<T> generateRecordsInBetweenDates(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
         List<T> records = new ArrayList<>();
@@ -26,4 +27,17 @@ public class DataGenerator<T extends Measurement> {
         this.measurement = measurement;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DataGenerator)) return false;
+        DataGenerator<?> that = (DataGenerator<?>) o;
+        return Objects.equals(measurement, that.measurement);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(measurement);
+    }
 }

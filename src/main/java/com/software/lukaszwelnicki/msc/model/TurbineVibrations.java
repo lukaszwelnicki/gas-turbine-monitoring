@@ -22,11 +22,16 @@ public class TurbineVibrations extends Measurement {
     private double vibrationFour;
 
     public TurbineVibrations random() {
-        double vibrationOne = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
-        double vibrationTwo = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
-        double vibrationThree = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
-        double vibrationFour = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
-        return new TurbineVibrations(vibrationOne, vibrationTwo, vibrationThree, vibrationFour);
+        return TurbineVibrations.getRandom();
+    }
+
+    public static TurbineVibrations getRandom() {
+        TurbineVibrations instance = new TurbineVibrations();
+        instance.setVibrationOne(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        instance.setVibrationTwo(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        instance.setVibrationThree(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        instance.setVibrationFour(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        return instance;
     }
 
 }

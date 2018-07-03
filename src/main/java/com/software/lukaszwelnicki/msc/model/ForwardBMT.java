@@ -20,11 +20,16 @@ public class ForwardBMT extends Measurement {
     private double temperatureFour;
 
     public ForwardBMT random() {
-        double temperatureOne = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
-        double temperatureTwo = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
-        double temperatureThree = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
-        double temperatureFour = RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD);
-        return new ForwardBMT(temperatureOne, temperatureTwo, temperatureThree, temperatureFour);
+        return ForwardBMT.getRandom();
+    }
+
+    public static ForwardBMT getRandom() {
+        ForwardBMT instance = new ForwardBMT();
+        instance.setTemperatureOne(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        instance.setTemperatureTwo(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        instance.setTemperatureThree(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        instance.setTemperatureFour(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        return instance;
     }
 
 }

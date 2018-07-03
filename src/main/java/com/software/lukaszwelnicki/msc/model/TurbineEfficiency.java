@@ -1,10 +1,11 @@
 package com.software.lukaszwelnicki.msc.model;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -19,7 +20,13 @@ public class TurbineEfficiency extends Measurement{
     private double turbineEfficiency;
 
     public TurbineEfficiency random() {
-        return new TurbineEfficiency(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        return TurbineEfficiency.getRandom();
+    }
+
+    public static TurbineEfficiency getRandom() {
+        TurbineEfficiency instance = new TurbineEfficiency();
+        instance.setTurbineEfficiency(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        return instance;
     }
 
 }

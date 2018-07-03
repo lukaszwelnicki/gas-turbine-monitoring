@@ -2,10 +2,7 @@ package com.software.lukaszwelnicki.msc.model;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
 import lombok.*;
-import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +17,13 @@ public class CompressorEfficiency extends Measurement {
     private double compressorEfficiency;
 
     public CompressorEfficiency random() {
-        return new CompressorEfficiency(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        return CompressorEfficiency.getRandom();
+    }
+
+    public static CompressorEfficiency getRandom() {
+        CompressorEfficiency instance = new CompressorEfficiency();
+        instance.setCompressorEfficiency(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
+        return instance;
     }
 
 }

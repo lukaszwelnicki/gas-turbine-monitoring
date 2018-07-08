@@ -37,7 +37,6 @@ public class DataGenerator<T extends Measurement> {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(measurement);
     }
 }

@@ -19,6 +19,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DatabaseInitializer implements CommandLineRunner {
 
+    private static final int SECONDS_BETWEEN_RECORDS = 15;
+    private static final LocalDateTime START = LocalDateTime.now();
+    private static final LocalDateTime END = LocalDateTime.now().minusMonths(3);
+
     private final MongoTemplate mongoTemplate = new MongoTemplate(new MongoClient("localhost"), "measurements");
 
     private final ReactiveMeasurementRepository<AftBMT> aftBMTReactiveMeasurementRepository;
@@ -31,10 +35,10 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final Map<DataGenerator, ReactiveMeasurementRepository> dataGeneratorMeasurementRepositoryHashMap = new HashMap<>();
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         fillGeneratorRepositoryMap();
         dropAllCollections();
-//        bootstrapDB(LocalDateTime.now().minusDays(1), LocalDateTime.now(), 15);
+        bootstrapDB();
     }
 
     private void dropAllCollections() {
@@ -46,9 +50,9 @@ public class DatabaseInitializer implements CommandLineRunner {
         mongoTemplate.dropCollection(TurbineVibrations.class);
     }
 
-    private void bootstrapDB(LocalDateTime start, LocalDateTime end, int secondsBetweenRecords) {
+    private void bootstrapDB() {
         dataGeneratorMeasurementRepositoryHashMap.forEach(((generator, repository) ->
-                repository.saveAll(generator.generateRecordsInBetweenDates(start, end, secondsBetweenRecords)).subscribe()));
+                repository.saveAll(generator.generateRecordsInBetweenDates(START, END, SECONDS_BETWEEN_RECORDS)).subscribe()));
     }
 
     private void fillGeneratorRepositoryMap() {

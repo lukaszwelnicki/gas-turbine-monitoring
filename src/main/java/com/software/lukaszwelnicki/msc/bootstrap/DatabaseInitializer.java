@@ -1,9 +1,10 @@
 package com.software.lukaszwelnicki.msc.bootstrap;
 
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 import com.software.lukaszwelnicki.msc.generator.DataGenerator;
-import com.software.lukaszwelnicki.msc.model.*;
-import com.software.lukaszwelnicki.msc.repositories.ReactiveMeasurementRepository;
+import com.software.lukaszwelnicki.msc.measurements.*;
+import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -20,25 +21,35 @@ import java.util.Map;
 public class DatabaseInitializer implements CommandLineRunner {
 
     private static final int SECONDS_BETWEEN_RECORDS = 15;
-    private static final LocalDateTime START = LocalDateTime.now();
-    private static final LocalDateTime END = LocalDateTime.now().minusMonths(3);
+    private static final LocalDateTime START = LocalDateTime.now().minusDays(3);
+    private static final LocalDateTime END = LocalDateTime.now();
 
     private final MongoTemplate mongoTemplate = new MongoTemplate(new MongoClient("localhost"), "measurements");
 
-    private final ReactiveMeasurementRepository<AftBMT> aftBMTReactiveMeasurementRepository;
-    private final ReactiveMeasurementRepository<CompressorEfficiency> compressorEfficiencyReactiveMeasurementRepository;
-    private final ReactiveMeasurementRepository<ForwardBMT> forwardBMTReactiveMeasurementRepository;
-    private final ReactiveMeasurementRepository<GeneratorVibrations> generatorVibrationsReactiveMeasurementRepository;
-    private final ReactiveMeasurementRepository<TurbineEfficiency> turbineEfficiencyReactiveMeasurementRepository;
-    private final ReactiveMeasurementRepository<TurbineVibrations> turbineVibrationsReactiveMeasurementRepository;
+    private final MeasurementRepository<AftBMT> aftBMTMeasurementRepository;
+    private final MeasurementRepository<CompressorEfficiency> compressorEfficiencyMeasurementRepository;
+    private final MeasurementRepository<ForwardBMT> forwardBMTMeasurementRepository;
+    private final MeasurementRepository<GeneratorVibrations> generatorVibrationsMeasurementRepository;
+    private final MeasurementRepository<TurbineEfficiency> turbineEfficiencyMeasurementRepository;
+    private final MeasurementRepository<TurbineVibrations> turbineVibrationsMeasurementRepository;
 
-    private final Map<DataGenerator, ReactiveMeasurementRepository> dataGeneratorMeasurementRepositoryHashMap = new HashMap<>();
+    private final Map<DataGenerator, MeasurementRepository> dataGeneratorMeasurementRepositoryHashMap = new HashMap<>();
 
     @Override
     public void run(String... args) {
         fillGeneratorRepositoryMap();
         dropAllCollections();
         bootstrapDB();
+        convertCollectionsToCapped();
+    }
+
+    private void fillGeneratorRepositoryMap() {
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new AftBMT()), aftBMTMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new CompressorEfficiency()), compressorEfficiencyMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new TurbineVibrations()), turbineVibrationsMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new ForwardBMT()), forwardBMTMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new GeneratorVibrations()), generatorVibrationsMeasurementRepository);
+        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new TurbineEfficiency()), turbineEfficiencyMeasurementRepository);
     }
 
     private void dropAllCollections() {
@@ -51,17 +62,12 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void bootstrapDB() {
-        dataGeneratorMeasurementRepositoryHashMap.forEach(((generator, repository) ->
-                repository.saveAll(generator.generateRecordsInBetweenDates(START, END, SECONDS_BETWEEN_RECORDS)).subscribe()));
+        dataGeneratorMeasurementRepositoryHashMap.forEach((generator, repository) ->
+                repository.saveAll(generator.generateRecordsInBetweenDates(START, END, SECONDS_BETWEEN_RECORDS)).subscribe());
     }
 
-    private void fillGeneratorRepositoryMap() {
-        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new AftBMT()), aftBMTReactiveMeasurementRepository);
-        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new CompressorEfficiency()), compressorEfficiencyReactiveMeasurementRepository);
-        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new ForwardBMT()), forwardBMTReactiveMeasurementRepository);
-        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new GeneratorVibrations()), generatorVibrationsReactiveMeasurementRepository);
-        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new TurbineEfficiency()), turbineEfficiencyReactiveMeasurementRepository);
-        dataGeneratorMeasurementRepositoryHashMap.put(new DataGenerator<>(new TurbineVibrations()), turbineVibrationsReactiveMeasurementRepository);
+    private void convertCollectionsToCapped() {
+        final MongoDatabase db = mongoTemplate.getDb();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.software.lukaszwelnicki.msc.model;
+package com.software.lukaszwelnicki.msc.measurements;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
 import lombok.AllArgsConstructor;
@@ -11,22 +11,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Document(collection = "turbine_efficiency")
+@Document(collection = TurbineEfficiency.COLLECTION_NAME)
 public class TurbineEfficiency extends Measurement{
 
+    static final String COLLECTION_NAME = "turbine_efficiency";
     private static final double MIDDLE_VALUE = 80.0;
     private static final double SPREAD = 5.0;
 
     private double turbineEfficiency;
 
     public TurbineEfficiency random() {
-        return TurbineEfficiency.getRandom();
+        return new TurbineEfficiency(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
     }
-
-    public static TurbineEfficiency getRandom() {
-        TurbineEfficiency instance = new TurbineEfficiency();
-        instance.setTurbineEfficiency(RandomUtils.randomMiddleAndSpread(MIDDLE_VALUE, SPREAD));
-        return instance;
-    }
-
 }

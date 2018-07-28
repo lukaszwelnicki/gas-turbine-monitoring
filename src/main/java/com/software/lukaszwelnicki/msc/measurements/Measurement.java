@@ -1,4 +1,4 @@
-package com.software.lukaszwelnicki.msc.model;
+package com.software.lukaszwelnicki.msc.measurements;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

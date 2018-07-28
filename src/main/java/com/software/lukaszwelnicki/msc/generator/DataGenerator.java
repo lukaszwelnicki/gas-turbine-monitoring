@@ -1,6 +1,6 @@
 package com.software.lukaszwelnicki.msc.generator;
 
-import com.software.lukaszwelnicki.msc.model.Measurement;
+import com.software.lukaszwelnicki.msc.measurements.Measurement;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,6 +16,7 @@ public class DataGenerator<T extends Measurement> {
         List<T> records = new ArrayList<>();
         long numberOfRecords = Duration.between(start, end).getSeconds() / secondsBetweenReadings;
         for (int i = 0; i < numberOfRecords; i++) {
+            @SuppressWarnings("unchecked")
             T record = (T) measurement.random();
             record.setCreatedDate(start.plusSeconds(secondsBetweenReadings * i));
             records.add(record);

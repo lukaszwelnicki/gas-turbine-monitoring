@@ -1,6 +1,7 @@
 package com.software.lukaszwelnicki.msc.measurements;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,9 +23,9 @@ public enum MeasurementCollections {
         return collectionName;
     }
 
-    public Set<String> namesSet() {
+    public static Set<String> namesSet() {
         return Arrays.stream(MeasurementCollections.values())
                 .map(MeasurementCollections::getCollectionName)
-                .collect(Collectors.toSet());
+                .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
     }
 }

@@ -5,6 +5,7 @@ import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Component
 public class DataGeneratorsSet implements ApplicationContextAware {
 
     private static ApplicationContext applicationContextInstance;

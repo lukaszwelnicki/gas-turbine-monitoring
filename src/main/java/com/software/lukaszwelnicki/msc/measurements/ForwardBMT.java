@@ -1,5 +1,6 @@
 package com.software.lukaszwelnicki.msc.measurements;
 
+import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
 import io.vavr.Function2;
 import lombok.*;

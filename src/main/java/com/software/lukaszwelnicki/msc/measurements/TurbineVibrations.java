@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = TurbineVibrations.COLLECTION_NAME)
 public class TurbineVibrations extends Measurement {
 
-    static final String COLLECTION_NAME = "turbine_efficiency";
+    static final String COLLECTION_NAME = "turbine_vibrations";
     private static final double MIDDLE_VALUE = 2.0;
     private static final double SPREAD = 1.5;
 

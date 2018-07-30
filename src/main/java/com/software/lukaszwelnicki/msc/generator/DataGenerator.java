@@ -1,18 +1,24 @@
 package com.software.lukaszwelnicki.msc.generator;
 
 import com.software.lukaszwelnicki.msc.measurements.Measurement;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+@RequiredArgsConstructor
+@EqualsAndHashCode
 public class DataGenerator<T extends Measurement> {
 
     private final T measurement;
 
     public List<T> generateRecordsInBetweenDates(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
+        if (secondsBetweenReadings == 0) {
+            throw new IllegalArgumentException("Seconds between readings must not be equal to zero");
+        }
         List<T> records = new ArrayList<>();
         long numberOfRecords = Duration.between(start, end).getSeconds() / secondsBetweenReadings;
         for (int i = 0; i < numberOfRecords; i++) {
@@ -24,20 +30,4 @@ public class DataGenerator<T extends Measurement> {
         return records;
     }
 
-    public DataGenerator(T measurement) {
-        this.measurement = measurement;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DataGenerator)) return false;
-        DataGenerator<?> that = (DataGenerator<?>) o;
-        return Objects.equals(measurement, that.measurement);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(measurement);
-    }
 }

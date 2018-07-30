@@ -23,9 +23,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private static final LocalDateTime END = LocalDateTime.now();
 
     private final MeasurementRepository measurementRepository;
-    private final DataGeneratorsSet dataGeneratorsSet;
 
-    @Override
     public void run(String... args) {
         DatabaseUtils.dropDatabase();
         bootstrapDB();
@@ -33,12 +31,11 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void bootstrapDB() {
-        dataGeneratorsSet.getDataGenerators().forEach(g ->
+        DataGeneratorsSet.getDataGenerators().forEach(g ->
                 measurementRepository.saveAll(generateEntities(g)).subscribe());
     }
 
     private List<Measurement> generateEntities(DataGenerator<Measurement> g) {
         return g.generateRecordsInBetweenDates(START, END, SECONDS_BETWEEN_RECORDS);
     }
-
 }

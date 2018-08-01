@@ -1,6 +1,5 @@
 package com.software.lukaszwelnicki.msc.database;
 
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.software.lukaszwelnicki.msc.generator.DataGeneratorsSet;
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections;
@@ -8,11 +7,9 @@ import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor

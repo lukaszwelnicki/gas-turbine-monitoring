@@ -1,4 +1,4 @@
-package com.software.lukaszwelnicki.msc.utils;
+package com.software.lukaszwelnicki.msc.database;
 
 import com.mongodb.client.MongoDatabase;
 import io.vavr.Tuple2;

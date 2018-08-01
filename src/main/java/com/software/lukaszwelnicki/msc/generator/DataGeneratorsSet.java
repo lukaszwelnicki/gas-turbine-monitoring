@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class DataGeneratorsSet {
+public final class DataGeneratorsSet {
 
     private static Set<DataGenerator<Measurement>> dataGenerators;
 
@@ -20,7 +20,7 @@ public class DataGeneratorsSet {
     }
 
     private static Set<DataGenerator<Measurement>> prepareDataGenerators() {
-        dataGenerators = MeasurementCollections.beanClasses().stream()
+        dataGenerators = MeasurementCollections.getMeasurementClasses().stream()
                 .map(instantiateMeasurementClass())
                 .map(DataGenerator::new)
                 .collect(Collectors.toSet());

@@ -16,11 +16,8 @@ public class DataGenerator<T extends Measurement> {
     private final T measurement;
 
     public List<T> generateRecordsInBetweenDates(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
-        if (secondsBetweenReadings == 0) {
-            throw new IllegalArgumentException("Seconds between readings must not be equal to zero");
-        }
+        long numberOfRecords = getNumberOfRecords(start, end, secondsBetweenReadings);
         List<T> records = new ArrayList<>();
-        long numberOfRecords = Duration.between(start, end).getSeconds() / secondsBetweenReadings;
         for (int i = 0; i < numberOfRecords; i++) {
             @SuppressWarnings("unchecked")
             T record = (T) measurement.random();
@@ -28,6 +25,13 @@ public class DataGenerator<T extends Measurement> {
             records.add(record);
         }
         return records;
+    }
+
+    private long getNumberOfRecords(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
+        if (secondsBetweenReadings == 0) {
+            throw new IllegalArgumentException("Seconds between readings must not be equal to zero");
+        }
+        return Duration.between(start, end).getSeconds() / secondsBetweenReadings;
     }
 
 }

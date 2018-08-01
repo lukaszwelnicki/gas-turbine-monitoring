@@ -21,20 +21,20 @@ public enum MeasurementCollections {
         this.clazz = clazz;
     }
 
-    public static Set<Class<Measurement>> beanClasses() {
+    public static Set<Class<Measurement>> getMeasurementClasses() {
         return Arrays.stream(MeasurementCollections.values())
                 .map(MeasurementCollections::getClazz)
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
-    }
-
-    private String getCollectionName() {
-        return collectionName;
     }
 
     public static Set<String> namesSet() {
         return Arrays.stream(MeasurementCollections.values())
                 .map(MeasurementCollections::getCollectionName)
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
+    }
+
+    private String getCollectionName() {
+        return collectionName;
     }
 
     @SuppressWarnings("unchecked")

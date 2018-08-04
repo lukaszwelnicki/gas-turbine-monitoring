@@ -27,9 +27,12 @@ public class DataGenerator<T extends Measurement> {
         return records;
     }
 
-    private long getNumberOfRecords(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
+    final long getNumberOfRecords(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
         if (secondsBetweenReadings == 0) {
             throw new IllegalArgumentException("Seconds between readings must not be equal to zero");
+        }
+        if (end.isBefore(start) || end.isEqual(start)) {
+            throw new IllegalArgumentException("End time should be after start time.");
         }
         return Duration.between(start, end).getSeconds() / secondsBetweenReadings;
     }

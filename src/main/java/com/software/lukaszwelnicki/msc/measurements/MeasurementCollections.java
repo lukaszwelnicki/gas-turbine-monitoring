@@ -14,14 +14,14 @@ public enum MeasurementCollections {
     TURBINE_VIBRATIONS(TurbineVibrations.COLLECTION_NAME, TurbineVibrations.class);
 
     String collectionName;
-    Class clazz;
+    Class<? extends Measurement> clazz;
 
-    MeasurementCollections(String collectionName, Class clazz) {
+    MeasurementCollections(String collectionName, Class<? extends Measurement> clazz) {
         this.collectionName = collectionName;
         this.clazz = clazz;
     }
 
-    public static Set<Class<Measurement>> getMeasurementClasses() {
+    public static Set<Class<? extends Measurement>> getMeasurementClasses() {
         return Arrays.stream(MeasurementCollections.values())
                 .map(MeasurementCollections::getClazz)
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
@@ -38,7 +38,7 @@ public enum MeasurementCollections {
     }
 
     @SuppressWarnings("unchecked")
-    private Class<Measurement> getClazz() {
+    private Class<? extends Measurement> getClazz() {
         return clazz;
     }
 }

@@ -65,18 +65,19 @@ class DataGeneratorTest extends Specification {
         LocalDateTime.MAX | LocalDateTime.MAX
     }
 
-    def "should return valid list of measurements"() {
+    def "should return list of measurements of valid type"() {
+        given:
+        def end = LocalDateTime.now()
+        def start = end.minusSeconds(100)
         List<? extends Measurement> resultsList =
-                dataGenerator.generateRecordsInBetweenDates()
+                generator.generateRecordsInBetweenDates(start, end, 10)
 
         then:
-        with(resultsList) {
-            resultsList.get(0).getClass() == clazz
-        }
+        resultsList.get(0).getClass() == clazz
 
         where:
-        clazz <<
-
+        generator << dataGenerators
+        clazz << measurementsClasses
 
     }
 

@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
 
 public final class DataGeneratorsSet {
 
-    private static Set<DataGenerator<Measurement>> dataGenerators;
+    private static Set<DataGenerator<? extends Measurement>> dataGenerators;
 
-    public static Set<DataGenerator<Measurement>> getDataGenerators() {
+    public static Set<DataGenerator<? extends Measurement>> getDataGenerators() {
         return Optional.ofNullable(dataGenerators)
                 .map(Collections::unmodifiableSet)
                 .orElseGet(DataGeneratorsSet::prepareDataGenerators);
     }
 
-    private static Set<DataGenerator<Measurement>> prepareDataGenerators() {
+    private static Set<DataGenerator<? extends Measurement>> prepareDataGenerators() {
         dataGenerators = MeasurementCollections.getMeasurementClasses().stream()
                 .map(instantiateMeasurementClass())
                 .map(DataGenerator::new)
@@ -27,7 +27,7 @@ public final class DataGeneratorsSet {
         return Collections.unmodifiableSet(dataGenerators);
     }
 
-    private static Function<Class<Measurement>, Measurement> instantiateMeasurementClass() {
+    private static Function<Class<? extends Measurement>, ? extends Measurement> instantiateMeasurementClass() {
         return c -> {
             try {
                 return c.newInstance();

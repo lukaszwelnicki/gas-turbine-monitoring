@@ -4,6 +4,7 @@ import com.software.lukaszwelnicki.msc.measurements.Measurement;
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -23,7 +24,7 @@ public final class DataGeneratorsSet {
         dataGenerators = MeasurementCollections.getMeasurementClasses().stream()
                 .map(instantiateMeasurementClass())
                 .map(DataGenerator::new)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
         return Collections.unmodifiableSet(dataGenerators);
     }
 

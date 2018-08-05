@@ -16,10 +16,7 @@ class DataGeneratorTest extends Specification {
     Set<Class<? extends Measurement>> measurementsClasses = MeasurementCollections.getMeasurementClasses()
 
     @Shared
-    Set<? extends Measurement> measurementsInstances = measurementsClasses.collect { it.newInstance() }
-
-    @Shared
-    Set<DataGenerator<? extends Measurement>> dataGenerators = measurementsInstances.collect { new DataGenerator<>(it) }
+    Set<DataGenerator<? extends Measurement>> dataGenerators = DataGeneratorsSet.dataGenerators
 
     @Shared
     DataGenerator<AftBMT> dataGenerator = new DataGenerator<>(new AftBMT())
@@ -65,10 +62,12 @@ class DataGeneratorTest extends Specification {
         LocalDateTime.MAX | LocalDateTime.MAX
     }
 
-    def "should return list of measurements of valid type"() {
+    def "should return list of measurements of valid type = #clazz"() {
         given:
         def end = LocalDateTime.now()
         def start = end.minusSeconds(100)
+
+        when:
         List<? extends Measurement> resultsList =
                 generator.generateRecordsInBetweenDates(start, end, 10)
 

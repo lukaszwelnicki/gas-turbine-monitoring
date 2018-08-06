@@ -10,17 +10,18 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public final class DataGeneratorsSet {
+public enum DataGeneratorsSet {
+    INSTANCE;
 
-    private static Set<DataGenerator<? extends Measurement>> dataGenerators;
+    private Set<DataGenerator<? extends Measurement>> dataGenerators;
 
-    public static Set<DataGenerator<? extends Measurement>> getDataGenerators() {
+    public Set<DataGenerator<? extends Measurement>> getDataGenerators() {
         return Optional.ofNullable(dataGenerators)
                 .map(Collections::unmodifiableSet)
-                .orElseGet(DataGeneratorsSet::prepareDataGenerators);
+                .orElseGet(this::prepareDataGenerators);
     }
 
-    private static Set<DataGenerator<? extends Measurement>> prepareDataGenerators() {
+    private Set<DataGenerator<? extends Measurement>> prepareDataGenerators() {
         dataGenerators = MeasurementCollections.getMeasurementClasses().stream()
                 .map(instantiateMeasurementClass())
                 .map(DataGenerator::new)
@@ -28,7 +29,7 @@ public final class DataGeneratorsSet {
         return Collections.unmodifiableSet(dataGenerators);
     }
 
-    private static Function<Class<? extends Measurement>, ? extends Measurement> instantiateMeasurementClass() {
+    private Function<Class<? extends Measurement>, ? extends Measurement> instantiateMeasurementClass() {
         return c -> {
             try {
                 return c.newInstance();
@@ -38,5 +39,4 @@ public final class DataGeneratorsSet {
             }
         };
     }
-
 }

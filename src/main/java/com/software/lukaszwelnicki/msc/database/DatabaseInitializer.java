@@ -37,7 +37,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void bootstrapDB(LocalDateTime start, LocalDateTime end, int secondsBetweenRecords) {
-        DataGeneratorsSet.getDataGenerators().forEach(g ->
+        DataGeneratorsSet.INSTANCE.getDataGenerators().forEach(g ->
                 measurementRepository
                         .saveAll(g.generateRecordsInBetweenDates(start, end, secondsBetweenRecords))
                         .subscribe());

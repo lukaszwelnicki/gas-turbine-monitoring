@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class DatabaseUtils {
+class DatabaseUtils {
 
-    public static void dropMongoDatabase(MongoDatabase database) {
+    static void dropMongoDatabase(MongoDatabase database) {
         log.info("Drop database response: " +
                 database.runCommand(new Document("dropDatabase", 1)).toJson());
     }
 
-    public static void convertToCapped(MongoDatabase db, Collection<String> collectionsNames, int maxRecords) {
+    static void convertToCapped(MongoDatabase db, Collection<String> collectionsNames, int maxRecords) {
         collectionsNames.stream()
                 .map(s -> createConvertToCappedCommand(s, maxRecords))
                 .forEach(t -> performOperationOnDB(t, db));

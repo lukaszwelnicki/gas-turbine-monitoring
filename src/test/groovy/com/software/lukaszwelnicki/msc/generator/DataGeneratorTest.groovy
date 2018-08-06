@@ -39,7 +39,7 @@ class DataGeneratorTest extends Specification {
         100     | 10             || 10
     }
 
-    def "should throw IllegalArgumentException when secondsBetweenReadins == 0"() {
+    def "should throw IllegalArgumentException when secondsBetweenReadings == 0"() {
         when:
         dataGenerator.getNumberOfRecords(LocalDateTime.MIN, LocalDateTime.MAX, 0)
 
@@ -79,6 +79,4 @@ class DataGeneratorTest extends Specification {
         clazz << measurementsClasses
 
     }
-
-
 }

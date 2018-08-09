@@ -16,7 +16,7 @@ class DataGeneratorTest extends Specification {
     Set<Class<? extends Measurement>> measurementsClasses = MeasurementCollections.getMeasurementClasses()
 
     @Shared
-    Set<DataGenerator<? extends Measurement>> dataGenerators = DataGeneratorsSet.dataGenerators
+    Set<DataGenerator<? extends Measurement>> dataGenerators = DataGeneratorsSet.INSTANCE.dataGenerators
 
     @Shared
     DataGenerator<AftBMT> dataGenerator = new DataGenerator<>(new AftBMT())
@@ -77,6 +77,20 @@ class DataGeneratorTest extends Specification {
         where:
         generator << dataGenerators
         clazz << measurementsClasses
+
+    }
+
+    def "List of measurements should be equal in size to numberOfRecords"() {
+        expect:
+        dataGenerator
+                .generateRecordsInBetweenDates(start, end, secondsBetweenReadings).size() == dataGenerator
+                .getNumberOfRecords(start, end, secondsBetweenReadings)
+
+        where:
+        end = LocalDateTime.now()
+        start = end.minusSeconds(100)
+        secondsBetweenReadings = 10
+
 
     }
 }

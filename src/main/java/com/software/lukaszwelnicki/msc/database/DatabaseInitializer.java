@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class DatabaseInitializer implements CommandLineRunner {
 
-    private static final int MAX_RECORDS = 1000;
+    private static final int MAX_RECORDS = 1000000;
 
     private static final int SECONDS_BETWEEN_RECORDS = 15;
     private static final LocalDateTime START = LocalDateTime.now().minusDays(3);

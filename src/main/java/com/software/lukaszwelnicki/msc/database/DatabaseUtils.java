@@ -1,42 +1,39 @@
 package com.software.lukaszwelnicki.msc.database;
 
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.reactivestreams.client.MongoCollection;
+import com.mongodb.reactivestreams.client.MongoDatabase;
 import io.vavr.Tuple2;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
+import org.reactivestreams.Publisher;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Component
+@RequiredArgsConstructor
 class DatabaseUtils {
 
-    static void dropMongoDatabase(MongoDatabase database) {
-        log.info("Drop database response: " +
-                database.runCommand(new Document("dropDatabase", 1)).toJson());
+    private final ReactiveMongoTemplate reactiveMongoTemplate;
+
+    Flux<Document> convertCollectionsToCapped(int maxRecords) {
+        final MongoDatabase db = reactiveMongoTemplate.getMongoDatabase();
+        return reactiveMongoTemplate.getCollectionNames()
+                .map(s -> convertCollectionToCappedDocument(s, maxRecords))
+                .flatMap(db::runCommand);
     }
 
-    static void convertToCapped(MongoDatabase db, Collection<String> collectionsNames, int maxRecords) {
-        collectionsNames.stream()
-                .map(s -> createConvertToCappedCommand(s, maxRecords))
-                .forEach(t -> performOperationOnDB(t, db));
-    }
-
-    private static void performOperationOnDB(Tuple2<Document, String> commandAndLogInfo, MongoDatabase db) {
-        log.info(commandAndLogInfo._2 + db.runCommand(commandAndLogInfo._1).toJson());
-    }
-
-    private static Tuple2<Document, String> createConvertToCappedCommand(String collectionName, int maxRecords) {
+    private Document convertCollectionToCappedDocument(String collectionName, int maxRecords) {
         Map<String, Object> commands = new HashMap<>();
         commands.put("convertToCapped", collectionName);
         commands.put("size", maxRecords);
-        return new Tuple2<>(new Document(commands), prepareLogMessageForCreateCappedCollection(collectionName));
-    }
-
-    private static String prepareLogMessageForCreateCappedCollection(String collectionName) {
-        return "Convert " + collectionName + " to capped response: ";
-
+        return new Document(commands);
     }
 
 }

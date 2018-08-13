@@ -16,7 +16,7 @@ public class MeasurementService {
         this.measurementRepository = measurementRepository;
     }
 
-    public Flux<? extends Measurement> findAllMeasurements() {
-        return measurementRepository.findAllAftBmtWithTailableCursorBy();
+    public Flux<? extends Measurement> findMeasurementsbyClass(Class<? extends Measurement> clazz) {
+        return measurementRepository.findAllByClass(clazz);
     }
 }

@@ -15,12 +15,13 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 @EnableReactiveMongoRepositories(basePackageClasses = MeasurementRepository.class)
 public class DatabaseConfig extends AbstractReactiveMongoConfiguration {
 
+    static final String TEMPLATE_NAME = "external_db_template";
+
     @Value("${spring.data.mongodb.host}")
     private String host;
 
     @Value("${spring.data.mongodb.database}")
     private String databaseName;
-
 
     @Override
     public MongoClient reactiveMongoClient() {
@@ -32,7 +33,7 @@ public class DatabaseConfig extends AbstractReactiveMongoConfiguration {
         return databaseName;
     }
 
-    @Bean
+    @Bean(name = TEMPLATE_NAME)
     public ReactiveMongoTemplate reactiveMongoTemplate() {
         return new ReactiveMongoTemplate(reactiveMongoClient(), getDatabaseName());
     }

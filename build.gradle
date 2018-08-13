@@ -36,4 +36,5 @@ dependencies {
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
     testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
     testCompile 'io.projectreactor:reactor-test'
+    testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.1.1'
 }

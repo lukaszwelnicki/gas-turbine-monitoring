@@ -8,6 +8,7 @@ import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
@@ -30,6 +31,8 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private final DatabaseUtils databaseUtils;
     private final MeasurementRepository<Measurement> measurementRepository;
+
+    @Qualifier(DatabaseConfig.TEMPLATE_NAME)
     private final ReactiveMongoTemplate mongoTemplate;
 
     public void run(String... args) {

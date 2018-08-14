@@ -12,5 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class YAMLConfig {
 
     private long cappedSize;
+    private int cappedCount;
     private int samplingSeconds;
+
 }

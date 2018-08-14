@@ -1,5 +1,7 @@
 package com.software.lukaszwelnicki.msc.database;
 
+import com.mongodb.reactivestreams.client.MongoCollection;
+import com.mongodb.reactivestreams.client.Success;
 import com.software.lukaszwelnicki.msc.config.YAMLConfig;
 import com.software.lukaszwelnicki.msc.generators.DataGeneratorsSet;
 import com.software.lukaszwelnicki.msc.measurements.Measurement;
@@ -12,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
@@ -28,26 +31,27 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final ReactiveMongoTemplate mongoTemplate;
     private final YAMLConfig yamlConfig;
 
-
     public void run(String... args) {
-        dropAllCollections()
+        dropDatabase()
+                .thenMany(createCollections())
                 .thenMany(bootstrapDb())
-                .thenMany(convertAllCollectionsToCapped())
                 .subscribe();
     }
 
+    private Flux<MongoCollection<Document>> createCollections() {
+        return Flux.fromIterable(MeasurementCollections.getMeasurementClasses())
+                .flatMap(databaseUtils::createCappedCollectionByClass);
+    }
+
+    private Mono<Success> dropDatabase() {
+        return Mono.from(mongoTemplate.getMongoDatabase().drop());
+    }
+
     private Flux<? extends Measurement> bootstrapDb() {
-         return Flux.fromIterable(DataGeneratorsSet.INSTANCE.getDataGenerators())
+        return Flux.fromIterable(DataGeneratorsSet.INSTANCE.getDataGenerators())
                 .flatMap(g -> measurementRepository
                         .saveAll(g.generateRecordsInBetweenDates(START, END, yamlConfig.getSamplingSeconds())));
     }
 
-    private Flux<Document> convertAllCollectionsToCapped() {
-        return databaseUtils.convertCollectionsToCapped(yamlConfig.getCappedSize());
-    }
 
-    private Flux<Void> dropAllCollections() {
-        return Flux.fromIterable(MeasurementCollections.getMeasurementClasses())
-                .flatMap(mongoTemplate::dropCollection);
-    }
 }

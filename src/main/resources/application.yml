@@ -3,3 +3,5 @@ spring:
     mongodb:
       database: measurements
       host: localhost
+cappedSize: 1000000000000000
+samplingSeconds: 15

@@ -1,4 +1,4 @@
-package com.software.lukaszwelnicki.msc.YAMLConfig;
+package com.software.lukaszwelnicki.msc.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,6 +1,6 @@
 package com.software.lukaszwelnicki.msc.database;
 
-import com.software.lukaszwelnicki.msc.YAMLConfig.YAMLConfig;
+import com.software.lukaszwelnicki.msc.config.YAMLConfig;
 import com.software.lukaszwelnicki.msc.generators.DataGenerator;
 import com.software.lukaszwelnicki.msc.generators.DataGeneratorsSet;
 import com.software.lukaszwelnicki.msc.measurements.Measurement;

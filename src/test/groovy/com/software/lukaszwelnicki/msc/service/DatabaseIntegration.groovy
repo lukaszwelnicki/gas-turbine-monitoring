@@ -34,7 +34,7 @@ class DatabaseIntegration extends Specification {
 
     def "should return Flux of valid Measurement type"() {
         given:
-            List<AftBMT> records = measurementRepository.findAllByClass(AftBMT.class).collect(Collectors.toList()).block()
+            List<AftBMT> records = measurementRepository.findWithTailableCursorByClass(AftBMT.class).collect(Collectors.toList()).block()
         expect:
             records.get(0).class == AftBMT.class
     }

@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
+import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
 import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
@@ -22,7 +23,7 @@ public class MeasurementHandler {
 
     private final MeasurementService measurementService;
 
-    public Mono<ServerResponse> allByCollectionName(ServerRequest request) {
+    Mono<ServerResponse> allByCollectionName(ServerRequest request) {
         return Optional.of(request.pathVariable("collection"))
                 .map(MeasurementCollections::findMeasurementClassByCollectionName)
                 .map(this::getServerResponseAndData)
@@ -34,5 +35,19 @@ public class MeasurementHandler {
                 .body(measurementService.findMeasurementsByClass(clazz), ParameterizedTypeReference.forType(Measurement.class))
                 .switchIfEmpty(notFound().build());
     }
+
+    Mono<ServerResponse> startFillingDatabase(ServerRequest serverRequest) {
+        return Optional.ofNullable(measurementService.startDatabaseFillProcess())
+                .filter(d -> !d.isDisposed())
+                .map(d -> ok().build())
+                .orElse(badRequest().build());
+    }
+
+    Mono<ServerResponse> stopFillingDatabase(ServerRequest serverRequest) {
+        measurementService.killDatabaseFillProcess();
+        return ok().build();
+    }
+
+
 
 }

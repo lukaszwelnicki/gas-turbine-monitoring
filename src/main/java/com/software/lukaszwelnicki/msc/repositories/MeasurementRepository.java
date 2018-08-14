@@ -1,6 +1,5 @@
 package com.software.lukaszwelnicki.msc.repositories;
 
-import com.software.lukaszwelnicki.msc.measurements.AftBMT;
 import com.software.lukaszwelnicki.msc.measurements.Measurement;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;

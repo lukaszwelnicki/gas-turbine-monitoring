@@ -33,6 +33,14 @@ public enum MeasurementCollections {
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
     }
 
+    public static Class<? extends Measurement> findMeasurementClassByCollectionName(String name) {
+        return Arrays.stream(MeasurementCollections.values())
+                .filter(m -> name.equals(m.getCollectionName()))
+                .findFirst()
+                .map(MeasurementCollections::getClazz)
+                .orElse(null);
+    }
+
     private String getCollectionName() {
         return collectionName;
     }

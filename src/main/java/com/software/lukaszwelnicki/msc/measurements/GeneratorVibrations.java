@@ -2,7 +2,11 @@ package com.software.lukaszwelnicki.msc.measurements;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
 import io.vavr.Function2;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 

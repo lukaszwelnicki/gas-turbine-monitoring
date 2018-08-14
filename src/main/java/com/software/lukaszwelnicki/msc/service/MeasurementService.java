@@ -2,6 +2,7 @@ package com.software.lukaszwelnicki.msc.service;
 
 import com.software.lukaszwelnicki.msc.database.DatabaseFiller;
 import com.software.lukaszwelnicki.msc.measurements.Measurement;
+import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections;
 import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +20,13 @@ public class MeasurementService {
 
     private Disposable databaseFillProcess;
 
-
     public Flux<? extends Measurement> findMeasurementsByClass(Class<? extends Measurement> clazz) {
         return measurementRepository.findAllByClass(clazz);
+    }
+
+    public Flux<? extends Measurement> findMeasurementsByCollectionName(String name) {
+        Class<? extends Measurement> measurementClass = MeasurementCollections.findMeasurementClassByCollectionName(name);
+        return findMeasurementsByClass(measurementClass);
     }
 
     public void startDatabaseFillProcess() {

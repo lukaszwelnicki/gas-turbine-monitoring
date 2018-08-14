@@ -26,7 +26,7 @@ public class MeasurementService {
 
     public Flux<? extends Measurement> findMeasurementsByCollectionName(String name) {
         Class<? extends Measurement> measurementClass = MeasurementCollections.findMeasurementClassByCollectionName(name);
-        return findMeasurementsByClass(measurementClass);
+        return findMeasurementsByClass(measurementClass).share();
     }
 
     public void startDatabaseFillProcess() {

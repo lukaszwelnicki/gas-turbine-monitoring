@@ -1,4 +1,4 @@
-package com.software.lukaszwelnicki.msc.handlers;
+package com.software.lukaszwelnicki.msc.web;
 
 import com.software.lukaszwelnicki.msc.measurements.Measurement;
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections;

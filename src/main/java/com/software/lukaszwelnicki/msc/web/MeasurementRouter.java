@@ -1,4 +1,4 @@
-package com.software.lukaszwelnicki.msc.routers;
+package com.software.lukaszwelnicki.msc.web;
 
 import org.springframework.context.annotation.Configuration;
 

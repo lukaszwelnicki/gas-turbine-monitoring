@@ -22,9 +22,10 @@ public class DatabaseFiller {
     private final Set<DataGenerator<? extends Measurement>> generators = DataGeneratorsSet.INSTANCE.getDataGenerators();
 
     public Flux<? extends Measurement> fillDatabase() {
-        return Flux.interval(Duration.ofSeconds(yamlConfig.getSamplingSeconds()))
+        return Flux.interval(Duration.ZERO, Duration.ofSeconds(yamlConfig.getSamplingSeconds()))
                 .flatMap(l -> Flux.fromIterable(generators))
-                .flatMap(g -> measurementRepository.save(g.generateRandomRecord()));
+                .flatMap(g -> measurementRepository.save(g.generateRandomRecord()))
+                .share();
     }
 
 }

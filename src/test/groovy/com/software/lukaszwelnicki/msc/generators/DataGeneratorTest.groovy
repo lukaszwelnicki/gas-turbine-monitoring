@@ -1,8 +1,8 @@
 package com.software.lukaszwelnicki.msc.generators
 
-import com.software.lukaszwelnicki.msc.measurements.AftBMT
-import com.software.lukaszwelnicki.msc.measurements.Measurement
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections
+import com.software.lukaszwelnicki.msc.measurements.documents.AftBMT
+import com.software.lukaszwelnicki.msc.measurements.documents.Measurement
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll

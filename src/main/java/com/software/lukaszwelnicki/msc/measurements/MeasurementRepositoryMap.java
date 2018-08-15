@@ -1,5 +1,6 @@
 package com.software.lukaszwelnicki.msc.measurements;
 
+import com.software.lukaszwelnicki.msc.measurements.documents.*;
 import com.software.lukaszwelnicki.msc.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

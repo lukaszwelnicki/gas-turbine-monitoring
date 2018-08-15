@@ -1,13 +1,11 @@
-package com.software.lukaszwelnicki.msc.measurements;
+package com.software.lukaszwelnicki.msc.measurements.documents;
 
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
-import io.vavr.Function2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -16,13 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(callSuper = true)
 @Document(collection = AftBMT.COLLECTION_NAME)
 public class AftBMT extends Measurement {
-    static final String COLLECTION_NAME = "aft_bmt";
+    public static final String COLLECTION_NAME = "aft_bmt";
     private static final double MIDDLE_VALUE = 150.0;
     private static final double SPREAD = 10.0;
-
-    @Transient
-    private final Function2<Double, Double, Double> randomTemperature =
-            Function2.of(RandomUtils::randomMiddleAndSpread);
 
     private double temperatureOne;
     private double temperatureTwo;
@@ -31,10 +25,10 @@ public class AftBMT extends Measurement {
 
     public AftBMT random() {
         return new AftBMT(
-                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
-                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
-                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
-                randomTemperature.apply(MIDDLE_VALUE, SPREAD)
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD)
         );
 
     }

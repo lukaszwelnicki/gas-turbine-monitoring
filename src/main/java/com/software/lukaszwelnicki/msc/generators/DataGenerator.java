@@ -1,6 +1,6 @@
 package com.software.lukaszwelnicki.msc.generators;
 
-import com.software.lukaszwelnicki.msc.measurements.Measurement;
+import com.software.lukaszwelnicki.msc.measurements.documents.Measurement;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 

@@ -3,7 +3,7 @@ package com.software.lukaszwelnicki.msc.database;
 import com.mongodb.reactivestreams.client.MongoCollection;
 import com.mongodb.reactivestreams.client.MongoDatabase;
 import com.software.lukaszwelnicki.msc.config.YAMLConfig;
-import com.software.lukaszwelnicki.msc.measurements.Measurement;
+import com.software.lukaszwelnicki.msc.measurements.documents.Measurement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;

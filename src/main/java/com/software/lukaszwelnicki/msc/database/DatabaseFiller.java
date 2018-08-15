@@ -3,7 +3,7 @@ package com.software.lukaszwelnicki.msc.database;
 import com.software.lukaszwelnicki.msc.config.YAMLConfig;
 import com.software.lukaszwelnicki.msc.generators.DataGenerator;
 import com.software.lukaszwelnicki.msc.generators.DataGeneratorsSet;
-import com.software.lukaszwelnicki.msc.measurements.Measurement;
+import com.software.lukaszwelnicki.msc.measurements.documents.Measurement;
 import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

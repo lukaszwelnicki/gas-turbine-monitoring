@@ -1,6 +1,6 @@
 package com.software.lukaszwelnicki.msc.web;
 
-import com.software.lukaszwelnicki.msc.measurements.Measurement;
+import com.software.lukaszwelnicki.msc.measurements.documents.Measurement;
 import com.software.lukaszwelnicki.msc.service.MeasurementService;
 import io.vavr.Tuple2;
 import lombok.RequiredArgsConstructor;

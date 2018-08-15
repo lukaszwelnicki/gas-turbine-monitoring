@@ -1,4 +1,4 @@
-package com.software.lukaszwelnicki.msc.measurements;
+package com.software.lukaszwelnicki.msc.measurements.documents;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;

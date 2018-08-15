@@ -1,8 +1,8 @@
 package com.software.lukaszwelnicki.msc.service;
 
-import com.software.lukaszwelnicki.msc.measurements.Measurement;
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections;
 import com.software.lukaszwelnicki.msc.measurements.MeasurementRepositoryMap;
+import com.software.lukaszwelnicki.msc.measurements.documents.Measurement;
 import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import io.vavr.Tuple2;
 import lombok.RequiredArgsConstructor;

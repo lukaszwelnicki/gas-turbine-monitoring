@@ -4,5 +4,5 @@ spring:
       database: measurements
       host: localhost
 cappedSize: 1000000000000000
-cappedCount: 10
-samplingSeconds: 2
+cappedCount: 1000
+samplingSeconds: 5

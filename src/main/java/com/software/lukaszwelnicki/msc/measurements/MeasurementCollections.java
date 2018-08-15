@@ -1,5 +1,7 @@
 package com.software.lukaszwelnicki.msc.measurements;
 
+import com.software.lukaszwelnicki.msc.measurements.documents.*;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;

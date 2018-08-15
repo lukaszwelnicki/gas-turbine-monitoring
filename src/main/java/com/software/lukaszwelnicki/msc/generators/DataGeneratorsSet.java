@@ -1,7 +1,7 @@
 package com.software.lukaszwelnicki.msc.generators;
 
-import com.software.lukaszwelnicki.msc.measurements.Measurement;
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections;
+import com.software.lukaszwelnicki.msc.measurements.documents.Measurement;
 import io.vavr.collection.Stream;
 import io.vavr.control.Try;
 

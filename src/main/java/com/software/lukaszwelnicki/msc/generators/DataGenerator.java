@@ -27,9 +27,18 @@ public class DataGenerator<T extends Measurement> {
         return records;
     }
 
+    /*
+        I had to use saveAll() on repository in conjunction
+        with list creation in this metod to ensure
+        that records will land in desired collections.
+        Returning just one record did not work correctly.
+    */
     @SuppressWarnings("unchecked")
-    public T generateRandomRecord() {
-        return (T) measurement.random();
+    public List<T> generateRandomRecord() {
+        List<T> records = new ArrayList<>();
+        T record = (T) measurement.random();
+        records.add(record);
+        return records;
     }
 
     final long getNumberOfRecords(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {

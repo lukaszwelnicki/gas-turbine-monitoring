@@ -3,7 +3,6 @@ package com.software.lukaszwelnicki.msc.measurements;
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
 import io.vavr.Function2;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -32,11 +30,11 @@ public class TurbineVibrations extends Measurement {
     private double vibrationFour;
 
     public TurbineVibrations random() {
-        return TurbineVibrations.builder()
-                .vibrationOne(randomVibrations.apply(MIDDLE_VALUE, SPREAD))
-                .vibrationTwo(randomVibrations.apply(MIDDLE_VALUE, SPREAD))
-                .vibrationThree(randomVibrations.apply(MIDDLE_VALUE, SPREAD))
-                .vibrationFour(randomVibrations.apply(MIDDLE_VALUE, SPREAD))
-                .build();
+        return new TurbineVibrations(
+                randomVibrations.apply(MIDDLE_VALUE, SPREAD),
+                randomVibrations.apply(MIDDLE_VALUE, SPREAD),
+                randomVibrations.apply(MIDDLE_VALUE, SPREAD),
+                randomVibrations.apply(MIDDLE_VALUE, SPREAD)
+        );
     }
 }

@@ -1,7 +1,6 @@
 package com.software.lukaszwelnicki.msc.measurements;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 abstract public class Measurement {
 
     @Id
@@ -21,4 +19,7 @@ abstract public class Measurement {
 
     public abstract Measurement random();
 
+    public Measurement() {
+        this.createdDate = LocalDateTime.now();
+    }
 }

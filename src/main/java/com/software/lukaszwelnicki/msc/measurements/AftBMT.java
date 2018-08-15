@@ -4,7 +4,6 @@ package com.software.lukaszwelnicki.msc.measurements;
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
 import io.vavr.Function2;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -31,14 +29,13 @@ public class AftBMT extends Measurement {
     private double temperatureThree;
     private double temperatureFour;
 
-
     public AftBMT random() {
-        return AftBMT.builder()
-                .temperatureOne(randomTemperature.apply(MIDDLE_VALUE, SPREAD))
-                .temperatureTwo(randomTemperature.apply(MIDDLE_VALUE, SPREAD))
-                .temperatureThree(randomTemperature.apply(MIDDLE_VALUE, SPREAD))
-                .temperatureFour(randomTemperature.apply(MIDDLE_VALUE, SPREAD))
-                .build();
+        return new AftBMT(
+                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
+                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
+                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
+                randomTemperature.apply(MIDDLE_VALUE, SPREAD)
+        );
 
     }
 }

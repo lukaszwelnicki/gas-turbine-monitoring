@@ -2,11 +2,7 @@ package com.software.lukaszwelnicki.msc.measurements;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
 import io.vavr.Function2;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -33,11 +29,11 @@ public class ForwardBMT extends Measurement {
 
 
     public ForwardBMT random() {
-        return ForwardBMT.builder()
-                .temperatureOne(randomTemperature.apply(MIDDLE_VALUE, SPREAD))
-                .temperatureTwo(randomTemperature.apply(MIDDLE_VALUE, SPREAD))
-                .temperatureThree(randomTemperature.apply(MIDDLE_VALUE, SPREAD))
-                .temperatureFour(randomTemperature.apply(MIDDLE_VALUE, SPREAD))
-                .build();
+        return new ForwardBMT(
+                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
+                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
+                randomTemperature.apply(MIDDLE_VALUE, SPREAD),
+                randomTemperature.apply(MIDDLE_VALUE, SPREAD)
+        );
     }
 }

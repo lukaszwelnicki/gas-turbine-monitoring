@@ -10,11 +10,11 @@ import org.bson.Document;
 import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -24,11 +24,12 @@ class DatabaseUtils {
     private final ReactiveMongoTemplate reactiveMongoTemplate;
     private final YAMLConfig yamlConfig;
 
-    Flux<Document> convertCollectionsToCapped(long maxRecords) {
+    Mono<Document> convertCollectionToCapped(String collectionName, long maxRecords) {
         final MongoDatabase db = reactiveMongoTemplate.getMongoDatabase();
-        return reactiveMongoTemplate.getCollectionNames()
+        return Mono.from(Optional.of(collectionName)
                 .map(s -> prepareMongoCommandForCapped(s, maxRecords))
-                .flatMap(db::runCommand);
+                .map(db::runCommand)
+                .orElse(null));
     }
 
     Mono<MongoCollection<Document>> createCappedCollectionByClass(Class<? extends Measurement> clazz) {

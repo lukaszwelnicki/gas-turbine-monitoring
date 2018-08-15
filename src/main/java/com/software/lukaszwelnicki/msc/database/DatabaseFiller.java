@@ -6,12 +6,14 @@ import com.software.lukaszwelnicki.msc.generators.DataGeneratorsSet;
 import com.software.lukaszwelnicki.msc.measurements.Measurement;
 import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 import java.util.Set;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DatabaseFiller {
@@ -25,6 +27,7 @@ public class DatabaseFiller {
         return Flux.interval(Duration.ZERO, Duration.ofSeconds(yamlConfig.getSamplingSeconds()))
                 .flatMap(l -> Flux.fromIterable(generators))
                 .flatMap(g -> measurementRepository.save(g.generateRandomRecord()))
+                .log()
                 .share();
     }
 

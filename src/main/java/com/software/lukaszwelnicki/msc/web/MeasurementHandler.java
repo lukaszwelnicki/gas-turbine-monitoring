@@ -13,9 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
-import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
-import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
+import static org.springframework.web.reactive.function.server.ServerResponse.*;
 
 @Component
 @RequiredArgsConstructor
@@ -31,8 +29,8 @@ public class MeasurementHandler {
     }
 
     private Mono<ServerResponse> getServerResponseAndData(Class<? extends Measurement> clazz) {
-        return ok().contentType(MediaType.TEXT_EVENT_STREAM)
-                .body(measurementService.findMeasurementsByClass(clazz), ParameterizedTypeReference.forType(Measurement.class))
+        return ok().contentType(MediaType.APPLICATION_JSON)
+                .body(measurementService.findMeasurementsByClass(clazz), ParameterizedTypeReference.forType(clazz))
                 .switchIfEmpty(notFound().build());
     }
 

@@ -27,7 +27,7 @@ class DatabaseUtils {
     Flux<Document> convertCollectionsToCapped(long maxRecords) {
         final MongoDatabase db = reactiveMongoTemplate.getMongoDatabase();
         return reactiveMongoTemplate.getCollectionNames()
-                .map(s -> convertCollectionToCappedDocument(s, maxRecords))
+                .map(s -> prepareMongoCommandForCapped(s, maxRecords))
                 .flatMap(db::runCommand);
     }
 
@@ -42,7 +42,7 @@ class DatabaseUtils {
                 .capped();
     }
 
-    private Document convertCollectionToCappedDocument(String collectionName, long maxRecords) {
+    private Document prepareMongoCommandForCapped(String collectionName, long maxRecords) {
         Map<String, Object> commands = new HashMap<>();
         commands.put("convertToCapped", collectionName);
         commands.put("size", maxRecords);

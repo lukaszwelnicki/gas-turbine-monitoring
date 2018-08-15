@@ -2,13 +2,15 @@ package com.software.lukaszwelnicki.msc.generators;
 
 import com.software.lukaszwelnicki.msc.measurements.Measurement;
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections;
+import io.vavr.collection.Stream;
+import io.vavr.control.Try;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
+
 
 public enum DataGeneratorsSet {
     INSTANCE;
@@ -22,21 +24,11 @@ public enum DataGeneratorsSet {
     }
 
     private Set<DataGenerator<? extends Measurement>> prepareDataGenerators() {
-        dataGenerators = MeasurementCollections.getMeasurementClasses().stream()
-                .map(instantiateMeasurementClass())
+        dataGenerators = Stream.ofAll(MeasurementCollections.getMeasurementClasses())
+                .map(c -> Try.of(c::newInstance).get())
                 .map(DataGenerator::new)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
         return Collections.unmodifiableSet(dataGenerators);
     }
 
-    private Function<Class<? extends Measurement>, ? extends Measurement> instantiateMeasurementClass() {
-        return c -> {
-            try {
-                return c.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Could not instantiate class: " + c.getCanonicalName());
-            }
-        };
-    }
 }

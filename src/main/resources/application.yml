@@ -5,4 +5,4 @@ spring:
       host: localhost
 cappedSize: 1000000000000000
 cappedCount: 1000
-samplingSeconds: 5
+samplingSeconds: 2

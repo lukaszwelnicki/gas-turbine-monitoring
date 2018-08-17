@@ -37,12 +37,14 @@ where {collection_name} should be replaced with one of the following:
 - turbine_efficiency
 - turbine_vibrations
 
-If the database fill process is running, data should be streamed from MongoDB thanks to tailable cursors.
+If the database fill process is running, data should be streamed from MongoDB thanks to tailable cursors 
+and Server-Sent Events
 
 # Technologies used
 
 - Spring Boot 2.0
 - Spring Webflux
+- Project Reactor
 - Vavr.io
 - SpockFramework
 - MongoDB

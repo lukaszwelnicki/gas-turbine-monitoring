@@ -1,7 +1,11 @@
 package com.software.lukaszwelnicki.msc.measurements.documents;
 
 import com.software.lukaszwelnicki.msc.utils.RandomUtils;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -25,9 +29,9 @@ public class ForwardBMT extends Measurement {
     public ForwardBMT random() {
         return new ForwardBMT(
                 RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
-                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
-                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
-                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD)
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE - 5, SPREAD),
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE - 10, SPREAD),
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE - 15, SPREAD)
         );
     }
 }

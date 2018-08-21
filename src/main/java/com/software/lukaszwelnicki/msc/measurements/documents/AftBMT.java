@@ -26,9 +26,9 @@ public class AftBMT extends Measurement {
     public AftBMT random() {
         return new AftBMT(
                 RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
-                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
-                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD),
-                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE, SPREAD)
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE - 5, SPREAD),
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE - 10, SPREAD),
+                RandomUtils.randomMiddleAndSpreadFunction().apply(MIDDLE_VALUE - 15, SPREAD)
         );
 
     }

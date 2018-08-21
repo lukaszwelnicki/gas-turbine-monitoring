@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class DatabaseInitializer implements CommandLineRunner {
 
-    private static final LocalDateTime START = LocalDateTime.now().minusDays(3);
+    private static final LocalDateTime START = LocalDateTime.now().minusDays(10);
     private static final LocalDateTime END = LocalDateTime.now();
 
     private final DatabaseUtils databaseUtils;

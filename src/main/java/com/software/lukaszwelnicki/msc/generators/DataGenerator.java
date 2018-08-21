@@ -4,10 +4,12 @@ import com.software.lukaszwelnicki.msc.measurements.documents.Measurement;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigInteger;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode
@@ -15,15 +17,19 @@ public class DataGenerator<T extends Measurement> {
 
     private final T measurement;
 
+    @SuppressWarnings("unchecked")
     public List<T> generateRecordsInBetweenDates(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
-        long numberOfRecords = getNumberOfRecords(start, end, secondsBetweenReadings);
-        List<T> records = new ArrayList<>();
-        for (int i = 0; i < numberOfRecords; i++) {
-            @SuppressWarnings("unchecked")
-            T record = (T) measurement.random();
-            record.setCreatedDate(start.plusSeconds(secondsBetweenReadings * i));
-            records.add(record);
-        }
+        final BigInteger sampling = BigInteger.valueOf(secondsBetweenReadings);
+        int numberOfRecords = getNumberOfRecords(start, end, secondsBetweenReadings);
+        List<T> records = new ArrayList<>(numberOfRecords);
+        IntStream.range(0, numberOfRecords)
+                .parallel()
+                .mapToObj(BigInteger::valueOf)
+                .forEach(i -> {
+                    T record = (T) measurement.random();
+                    record.setCreatedDate(start.plusSeconds(i.multiply(sampling).longValue()));
+                    records.add(i.intValue(), record);
+                });
         return records;
     }
 
@@ -34,21 +40,21 @@ public class DataGenerator<T extends Measurement> {
         Returning just one record did not work correctly.
     */
     @SuppressWarnings("unchecked")
-    public List<T> generateRandomRecord() {
+    public List<T> generateRandomRecordAsList() {
         List<T> records = new ArrayList<>();
         T record = (T) measurement.random();
         records.add(record);
         return records;
     }
 
-    final long getNumberOfRecords(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
+    final int getNumberOfRecords(LocalDateTime start, LocalDateTime end, int secondsBetweenReadings) {
         if (secondsBetweenReadings == 0) {
             throw new IllegalArgumentException("Seconds between readings must not be equal to zero");
         }
         if (end.isBefore(start) || end.isEqual(start)) {
             throw new IllegalArgumentException("End time should be after start time.");
         }
-        return Duration.between(start, end).getSeconds() / secondsBetweenReadings;
+        return (int) (Duration.between(start, end).getSeconds() / secondsBetweenReadings);
     }
 
 

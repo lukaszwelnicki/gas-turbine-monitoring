@@ -26,7 +26,7 @@ public class DatabaseFiller {
     public Flux<? extends Measurement> fillDatabase() {
         return Flux.interval(Duration.ZERO, Duration.ofSeconds(yamlConfig.getSamplingSeconds()))
                 .flatMap(l -> Flux.fromIterable(generators))
-                .flatMap(g -> measurementRepository.saveAll(g.generateRandomRecord()))
+                .flatMap(g -> measurementRepository.saveAll(g.generateRandomRecordAsList()))
                 .log()
                 .share();
     }

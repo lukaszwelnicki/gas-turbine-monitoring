@@ -34,7 +34,7 @@ public class DataGenerator<T extends Measurement> {
         Returning just one record did not work correctly.
     */
     @SuppressWarnings("unchecked")
-    public List<T> generateRandomRecord() {
+    public List<T> generateRandomRecordAsList() {
         List<T> records = new ArrayList<>();
         T record = (T) measurement.random();
         records.add(record);

@@ -1,11 +1,11 @@
 package com.software.lukaszwelnicki.msc.service
 
-import com.software.lukaszwelnicki.msc.database.MeasurementRepository
 import com.software.lukaszwelnicki.msc.generators.DataGenerator
 import com.software.lukaszwelnicki.msc.generators.DataGeneratorsSet
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections
 import com.software.lukaszwelnicki.msc.measurements.documents.AftBMT
 import com.software.lukaszwelnicki.msc.measurements.documents.Measurement
+import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate

@@ -16,7 +16,8 @@
 *.iws
 *.iml
 *.ipr
-/out/
+*/out/
+
 
 ### NetBeans ###
 /nbproject/private/
@@ -33,7 +34,7 @@
 /coverage
 
 # production
-/build
+*/build
 
 # misc
 .DS_Store

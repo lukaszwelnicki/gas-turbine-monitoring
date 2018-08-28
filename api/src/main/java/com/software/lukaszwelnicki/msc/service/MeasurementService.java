@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,9 @@ public class MeasurementService {
     }
 
     public Flux<? extends Measurement> findMeasurementsByCollectionName(String name) {
-        return getRepository(name).findBy();
+        return Optional.ofNullable(getRepository(name))
+                .map(MeasurementRepository::findBy)
+                .orElseGet(Flux::empty);
     }
 
     private MeasurementRepository<? extends Measurement> getRepository(String name) {

@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
@@ -20,14 +21,17 @@ public class FillProcessHandler {
 
     Mono<ServerResponse> startFillingDatabase(ServerRequest serverRequest) {
         return Optional.ofNullable(fillProcessService.startDatabaseFillProcess())
-                .filter(d -> !d.isDisposed())
-                .map(d -> ok().build())
+                .map(d -> ok().body(Mono.just(false), Boolean.class))
                 .orElse(badRequest().build());
     }
 
     Mono<ServerResponse> stopFillingDatabase(ServerRequest serverRequest) {
         fillProcessService.killDatabaseFillProcess();
-        return ok().build();
+        return getServerResponseWithBody();
+    }
+
+    private Mono<ServerResponse> getServerResponseWithBody() {
+        return ok().body(fillProcessService.isProcessDisposed(), Boolean.class);
     }
 
 }

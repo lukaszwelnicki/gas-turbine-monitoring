@@ -3,11 +3,11 @@ package com.software.lukaszwelnicki.msc.service;
 import com.software.lukaszwelnicki.msc.database.DatabaseFiller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Service;
 import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Slf4j
@@ -31,10 +31,29 @@ public class DatabaseFillProcessService {
                 .ifPresent(Disposable::dispose);
     }
 
-    public Mono<Boolean> isProcessDisposed() {
+    public Mono<FillProcessStatus> isProcessDisposed() {
         return Optional.ofNullable(databaseFillProcess)
                 .map(Disposable::isDisposed)
+                .map(FillProcessStatus::getByStatus)
                 .map(Mono::just)
-                .orElseGet(() -> Mono.just(true));
+                .orElseGet(() -> Mono.just(FillProcessStatus.DISPOSED));
+    }
+
+    public enum FillProcessStatus {
+        DISPOSED(true),
+        NOT_DISPOSED(false);
+
+        boolean isDisposed;
+
+        FillProcessStatus(boolean isDisposed) {
+            this.isDisposed = isDisposed;
+        }
+
+        static FillProcessStatus getByStatus(boolean status) {
+            return Arrays.stream(FillProcessStatus.values())
+                    .filter(f -> f.isDisposed == status)
+                    .findFirst()
+                    .orElseThrow(RuntimeException::new);
+        }
     }
 }

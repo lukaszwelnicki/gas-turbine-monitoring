@@ -2,26 +2,28 @@ package com.software.lukaszwelnicki.msc.web;
 
 import com.software.lukaszwelnicki.msc.service.DatabaseFillProcessService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
-import java.util.function.Function;
 
+import static org.springframework.web.reactive.function.BodyInserters.fromPublisher;
 import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Component
 @RequiredArgsConstructor
-public class FillProcessHandler {
+public class DatabaseFillProcessHandler implements WebFluxConfigurer {
 
     private final DatabaseFillProcessService fillProcessService;
 
     Mono<ServerResponse> startFillingDatabase(ServerRequest serverRequest) {
         return Optional.ofNullable(fillProcessService.startDatabaseFillProcess())
-                .map(d -> ok().body(Mono.just(false), Boolean.class))
+                .map(d -> getServerResponseWithBody())
                 .orElse(badRequest().build());
     }
 
@@ -31,7 +33,9 @@ public class FillProcessHandler {
     }
 
     private Mono<ServerResponse> getServerResponseWithBody() {
-        return ok().body(fillProcessService.isProcessDisposed(), Boolean.class);
+        return ok().contentType(MediaType.APPLICATION_JSON)
+                .body(fromPublisher(fillProcessService.isProcessDisposed(),
+                        DatabaseFillProcessService.FillProcessStatus.class));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.software.lukaszwelnicki.msc.web
 
 import com.software.lukaszwelnicki.msc.IntegrationTestConfig
+import com.software.lukaszwelnicki.msc.database.FillProcessStatus
 import com.software.lukaszwelnicki.msc.measurements.documents.AftBMT
 import com.software.lukaszwelnicki.msc.service.DatabaseFillProcessService
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,7 +23,7 @@ class DatabaseFillProcessRouterTest extends Specification {
     @Autowired
     DatabaseFillProcessService dbService
 
-    def status = DatabaseFillProcessService.FillProcessStatus.DISPOSED
+    def status = FillProcessStatus.DISPOSED
 
     def "should start database fill process"() {
         given:

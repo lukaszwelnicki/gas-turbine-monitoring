@@ -1,5 +1,6 @@
 package com.software.lukaszwelnicki.msc.web;
 
+import com.software.lukaszwelnicki.msc.database.FillProcessStatus;
 import com.software.lukaszwelnicki.msc.service.DatabaseFillProcessService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -34,8 +35,7 @@ public class DatabaseFillProcessHandler implements WebFluxConfigurer {
 
     private Mono<ServerResponse> getServerResponseWithBody() {
         return ok().contentType(MediaType.APPLICATION_JSON)
-                .body(fromPublisher(fillProcessService.isProcessDisposed(),
-                        DatabaseFillProcessService.FillProcessStatus.class));
+                .body(fromPublisher(fillProcessService.isProcessDisposed(), FillProcessStatus.class));
     }
 
 }

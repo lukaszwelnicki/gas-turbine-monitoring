@@ -1,6 +1,7 @@
 package com.software.lukaszwelnicki.msc.service
 
 import com.software.lukaszwelnicki.msc.database.DatabaseFiller
+import com.software.lukaszwelnicki.msc.database.FillProcessStatus
 import com.software.lukaszwelnicki.msc.measurements.documents.AftBMT
 import reactor.core.publisher.Flux
 import spock.lang.Shared
@@ -25,8 +26,9 @@ class DatabaseFillProcessServiceTest extends Specification {
             1 * databaseFiller.fillDatabase() >>
                 Flux.interval(Duration.ZERO, Duration.ofSeconds(1))
                         .map { l -> dummyRecord }
+            databaseFillProcessService.startDatabaseFillProcess()
         expect:
-            !databaseFillProcessService.startDatabaseFillProcess().isDisposed()
+            databaseFillProcessService.isProcessDisposed().block() == FillProcessStatus.NOT_DISPOSED
     }
 
     def "should stop database fill process"() {
@@ -38,7 +40,7 @@ class DatabaseFillProcessServiceTest extends Specification {
             databaseFillProcessService.startDatabaseFillProcess()
             databaseFillProcessService.killDatabaseFillProcess()
         then:
-            databaseFillProcessService.isProcessDisposed().block() == true
+            databaseFillProcessService.isProcessDisposed().block() == FillProcessStatus.DISPOSED
     }
 
 }

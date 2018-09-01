@@ -7,24 +7,24 @@ MongoDB is established using docker-compose.yml. Sensor's data can be streamed t
 
 # Installation
 
-Run "docker-compose up" inside docker catalog. 
+Run "docker-compose up" inside docker catalog. You don't even need to clone this repository. Docker-compose is everything that is required.
 
 # Endpoints
 
 User can start the asynchronous database filling process emulating sensor's data gathering
 by triggering the following endpoint:
 
-- localhost:8080/fill
+- localhost:8081/fill
 
 Data is sampled within time intervals defined in application.yml. To stop this process, use:
 
-- localhost:8080/stopfill
+- localhost:8081/stopfill
 
 This will dispose the streaming process.
 
 To obtain sensors data, use the following endpoints:
 
-- localhost:8080/measurements/{collection_name}, 
+- localhost:8081/measurements/{collection_name}, 
 
 where {collection_name} should be replaced with one of the following:
 

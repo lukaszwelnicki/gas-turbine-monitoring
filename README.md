@@ -7,9 +7,7 @@ MongoDB is established using docker-compose.yml. Sensor's data can be streamed t
 
 # Installation
 
-First of all, run command "docker-compose up". This will establish the MongoDB database.
-Then, use your favorite IDE to run MscApplication - main() method. Give the application 
-about 15 seconds after boot to create capped collections and bootstrap them.
+Run "docker-compose up" inside docker catalog. 
 
 # Endpoints
 

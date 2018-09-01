@@ -1,9 +1,3 @@
-spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: measurements
 cappedSize: 1000000000000000
-cappedCount: 100000
+cappedCount: 100
 samplingSeconds: 2

@@ -1,0 +1,19 @@
+version: "3.1"
+
+services:
+  springboot:
+    image: lukaszwelnicki/gas-turbine-monitoring:latest
+    restart: always
+    container_name: gas-turbine-monitoring
+    ports:
+      - 8182:8080
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: gtm_mongo
+    volumes:
+    - $HOME/data/springboot-mongo-data:/data/db
+    - $HOME/data/springboot-mongo-bkp:/data/bkp
+    restart: always

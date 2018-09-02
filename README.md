@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/lukaszwelnicki/gas-turbine-monitoring.svg?style=svg)](https://circleci.com/gh/lukaszwelnicki/gas-turbine-monitoring)
+
 # gas-turbine-monitoring
 
 This application is responsible for storing and streaming heavy-duty gas turbine sensor's data. 

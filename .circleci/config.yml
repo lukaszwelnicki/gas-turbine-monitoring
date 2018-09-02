@@ -46,8 +46,7 @@ jobs:
     - run:
         name: Build and deploy Docker image
         command: |
-          cd ~/repo/gas-turbine-monitoring/docker
-          ./build
+          find . -type -regex ".*/gas-turbine-monitoring/docker/build.sh" -exec ./{}
 
     - run:
         name: Save test results

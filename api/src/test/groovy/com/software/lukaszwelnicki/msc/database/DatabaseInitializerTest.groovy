@@ -35,11 +35,6 @@ class DatabaseInitializerTest extends Specification {
                     .allMatch{s -> collectionNamesRequired.contains(s)}
     }
 
-    def "should drop database"() {
-        expect:
-            databaseInitializer.dropDatabase().block().getClass() == Success
-    }
-
     def "should bootstrap database"() {
         given:
             databaseInitializer.bootstrapDb(1, 43200).blockLast()
@@ -47,5 +42,10 @@ class DatabaseInitializerTest extends Specification {
             collectionNamesRequired.stream()
                     .map{name -> reactiveMongoTemplate.getCollection(name)}
                     .allMatch{collection -> Mono.from(collection.count()).block() == 2}
+    }
+
+    def "should drop database"() {
+        expect:
+            databaseInitializer.dropDatabase().block().getClass() == Success
     }
 }

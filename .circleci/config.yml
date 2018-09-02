@@ -39,7 +39,15 @@ jobs:
         key: v1-dependencies-{{ checksum "build.gradle" }}
 
     # run tests!
-    - run: ./gradlew clean test jacocoTestReport
+    - run:
+        name: Build project with test coverage
+        command: ./gradlew clean build jacocoTestReport
+
+    - run:
+        name: Build and deploy Docker image
+        command: |
+          cd ~/repo/gas-turbine-monitoring/docker
+          ./build
 
     - run:
         name: Save test results
@@ -55,7 +63,7 @@ jobs:
         path: ~/spock
 
     - run:
-        name: Send to CodeCov
+        name: Send test results to CodeCov
         command: bash <(curl -s https://codecov.io/bash)
 
 

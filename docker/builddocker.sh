@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd ..
-cp api/build/libs/api-*.jar docker/api.jar
+find . -iname "api-*.jar" -exec cp {} docker/api.jar \;
 cd docker
 docker build . -t gas-turbine-monitoring:latest
 docker tag gas-turbine-monitoring:latest lukaszwelnicki/gas-turbine-monitoring:latest

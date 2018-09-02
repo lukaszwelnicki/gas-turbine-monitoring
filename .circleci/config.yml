@@ -46,7 +46,7 @@ jobs:
     - run:
         name: Build and deploy Docker image
         command: |
-          find . -name "build.sh" -exec chmod +x {} \; -exec {} \
+          find ~/ -name "builddocker.sh" -exec chmod +x {} \; -exec {} \;
 
     - run:
         name: Save test results

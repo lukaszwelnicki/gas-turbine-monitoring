@@ -29,12 +29,6 @@ public enum MeasurementCollections {
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
     }
 
-    public static Set<String> namesSet() {
-        return Arrays.stream(MeasurementCollections.values())
-                .map(MeasurementCollections::getCollectionName)
-                .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
-    }
-
     public static Class<? extends Measurement> findMeasurementClassByCollectionName(String name) {
         return Arrays.stream(MeasurementCollections.values())
                 .filter(m -> name.equals(m.getCollectionName()))
@@ -43,7 +37,7 @@ public enum MeasurementCollections {
                 .orElse(null);
     }
 
-    private String getCollectionName() {
+    public String getCollectionName() {
         return collectionName;
     }
 

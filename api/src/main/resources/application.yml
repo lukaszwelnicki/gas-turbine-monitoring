@@ -1,3 +1,4 @@
+daysSinceStartMonitoring: 10
 cappedSize: 1000000000000000
 cappedCount: 100
 samplingSeconds: 2

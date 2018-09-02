@@ -10,6 +10,7 @@ import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Component;
@@ -23,34 +24,36 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class DatabaseInitializer implements CommandLineRunner {
 
-    private static final LocalDateTime START = LocalDateTime.now().minusDays(10);
-    private static final LocalDateTime END = LocalDateTime.now();
-
     private final DatabaseUtils databaseUtils;
     private final MeasurementRepository<Measurement> measurementRepository;
     private final ReactiveMongoTemplate mongoTemplate;
     private final YAMLConfig yamlConfig;
 
+    @Value("${daysSinceStartMonitoring}")
+    private long daysSinceStartMonitoring;
+
     public void run(String... args) {
         dropDatabase()
                 .thenMany(createCollections())
-                .thenMany(bootstrapDb())
+                .thenMany(bootstrapDb(daysSinceStartMonitoring, yamlConfig.getSamplingSeconds()))
                 .subscribe();
     }
 
-    private Flux<MongoCollection<Document>> createCollections() {
+    Flux<MongoCollection<Document>> createCollections() {
         return Flux.fromIterable(MeasurementCollections.getMeasurementClasses())
                 .flatMap(databaseUtils::createCappedCollectionByClass);
     }
 
-    private Mono<Success> dropDatabase() {
+    Mono<Success> dropDatabase() {
         return Mono.from(mongoTemplate.getMongoDatabase().drop());
     }
 
-    private Flux<? extends Measurement> bootstrapDb() {
+    Flux<? extends Measurement> bootstrapDb(long daysSinceStartMonitoring, int samplingSeconds) {
         return Flux.fromIterable(DataGeneratorsSet.INSTANCE.getDataGenerators())
                 .flatMap(g -> measurementRepository
-                        .saveAll(g.generateRecordsInBetweenDates(START, END, yamlConfig.getSamplingSeconds())));
+                        .saveAll(g.generateRecordsInBetweenDates
+                                (LocalDateTime.now().minusDays(daysSinceStartMonitoring),
+                                        LocalDateTime.now(), samplingSeconds)));
     }
 
 

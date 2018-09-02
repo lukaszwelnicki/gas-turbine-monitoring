@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 public class YAMLConfig {
 
+    private long daysSinceStartMonitoring;
     private long cappedSize;
     private int cappedCount;
     private int samplingSeconds;

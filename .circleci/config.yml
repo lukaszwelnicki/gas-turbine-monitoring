@@ -46,7 +46,7 @@ jobs:
     - run:
         name: Build and deploy Docker image
         command: |
-          find . -type f -regex ".*/gas-turbine-monitoring/docker/build.sh" -exec ./{}
+          find . -type f -regex ".*/gas-turbine-monitoring/docker/build.sh" -exec chmod +x {} \; -exec {} \
 
     - run:
         name: Save test results

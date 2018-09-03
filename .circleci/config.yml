@@ -24,6 +24,8 @@ jobs:
     steps:
     - checkout
 
+    - setup_remote_docker
+
     # Download and cache dependencies
     - restore_cache:
         keys:
@@ -48,8 +50,9 @@ jobs:
     - run:
         name: Build and deploy Docker image
         command: |
-          cd /home/circleci/repo/
-          ls -a
+          cd /home/circleci/repo/docker
+          chmod +x builddocker.sh
+          ./builddocker.sh
 
     - run:
         name: Save test results

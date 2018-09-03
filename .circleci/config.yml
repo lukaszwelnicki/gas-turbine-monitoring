@@ -49,6 +49,7 @@ jobs:
         name: Build and deploy Docker image
         command: |
           cd /home/circleci/repo/gas-turbine-monitoring/docker
+          chmod +x builddocker.sh
           ./builddocker.sh
 
     - run:

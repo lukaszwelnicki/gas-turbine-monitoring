@@ -43,12 +43,13 @@ jobs:
         name: Build project with test coverage
         command: ./gradlew clean build jacocoTestReport
 
+    - setup_remote_docker
+
     - run:
         name: Build and deploy Docker image
         command: |
-          cd /home/circleci/repo/gas-turbine-monitoring/docker
-          chmod +x builddocker.sh
-          ./builddocker.sh
+          cd /home/circleci/repo/
+          ls -a
 
     - run:
         name: Save test results

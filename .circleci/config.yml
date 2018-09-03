@@ -24,6 +24,8 @@ jobs:
     steps:
     - checkout
 
+    - setup_remote_docker
+
     # Download and cache dependencies
     - restore_cache:
         keys:
@@ -46,7 +48,8 @@ jobs:
     - run:
         name: Build and deploy Docker image
         command: |
-          find ~/ -name "builddocker.sh" -exec chmod +x {} \; -exec {} \;
+          cd /home/circleci/repo/gas-turbine-monitoring/docker
+          ./builddocker.sh
 
     - run:
         name: Save test results

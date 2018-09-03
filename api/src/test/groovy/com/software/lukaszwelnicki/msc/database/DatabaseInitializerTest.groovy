@@ -49,7 +49,7 @@ class DatabaseInitializerTest extends Specification {
     def "setupSpec"() {
         MongodStarter starter = MongodStarter.getDefaultInstance();
         IMongodConfig mongodConfig = new MongodConfigBuilder()
-                .version(Version.Main.V3_3)
+                .version(Version.LATEST_NIGHTLY)
                 .net(new Net(LOCALHOST, MONGO_TEST_PORT, Network.localhostIsIPv6()))
                 .build();
         MongodExecutable mongodExecutable = null;

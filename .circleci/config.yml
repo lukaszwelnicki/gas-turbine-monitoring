@@ -41,7 +41,7 @@ jobs:
     # run tests!
     - run:
         name: Build project with test coverage
-        command: ./gradlew clean build jacocoTestReport
+        command: ./gradlew build jacocoTestReport
 
     - setup_remote_docker
 

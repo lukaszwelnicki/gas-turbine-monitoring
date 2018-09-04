@@ -1,16 +1,13 @@
 package com.software.lukaszwelnicki.msc.database
 
-import com.mongodb.reactivestreams.client.Success
+
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections
 import com.software.lukaszwelnicki.msc.measurements.MeasurementRepositoryMap
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.util.TestPropertyValues
-import org.springframework.context.ApplicationContextInitializer
-import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.ContextConfiguration
+import org.testcontainers.containers.FixedHostPortGenericContainer
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.spock.Testcontainers
 import spock.lang.Shared
@@ -21,7 +18,6 @@ import java.util.stream.Collectors
 @ActiveProfiles("test")
 @SpringBootTest
 @Testcontainers
-@ContextConfiguration(initializers = Initializer.class)
 class DatabaseUtilsIntegrationTest extends Specification {
 
     @Autowired
@@ -34,7 +30,8 @@ class DatabaseUtilsIntegrationTest extends Specification {
     MeasurementRepositoryMap repositories
     
     @Shared
-    public static GenericContainer mongo = new GenericContainer('mongo:latest').withExposedPorts(27017)
+    public GenericContainer mongo = new FixedHostPortGenericContainer('mongo:latest')
+            .withFixedExposedPort(27019, 27017)
 
     @Shared
     static def collectionNamesRequired = Arrays.stream(MeasurementCollections.values())
@@ -60,19 +57,10 @@ class DatabaseUtilsIntegrationTest extends Specification {
     }
 
     def "should drop database"() {
-        expect:
-            databaseUtils.dropDatabase().block().getClass() == Success
+        when:
+            databaseUtils.dropDatabase().block()
+        then:
+            noExceptionThrown()
     }
 
-    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        @Override
-        void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            mongo.start()
-            TestPropertyValues values = TestPropertyValues.of(
-                    "spring.data.mongodb.host=" + mongo.getContainerIpAddress(),
-                    "spring.data.mongodb.port=" + mongo.getMappedPort(27017)
-            );
-            values.applyTo(configurableApplicationContext);
-        }
-    }
 }

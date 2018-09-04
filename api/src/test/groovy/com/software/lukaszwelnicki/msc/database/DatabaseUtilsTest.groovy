@@ -1,6 +1,7 @@
 package com.software.lukaszwelnicki.msc.database
 
 import com.software.lukaszwelnicki.msc.config.YAMLConfig
+import com.software.lukaszwelnicki.msc.repositories.MeasurementRepository
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import spock.lang.Specification
 
@@ -8,7 +9,9 @@ class DatabaseUtilsTest extends Specification {
 
     def reactiveMongoTemplate = Mock(ReactiveMongoTemplate)
     def yamlConfig = Mock(YAMLConfig)
-    def databaseUtils = new DatabaseUtils(reactiveMongoTemplate, yamlConfig)
+    def measurementRepository = Mock(MeasurementRepository)
+    def mongoTemplate = Mock(ReactiveMongoTemplate)
+    def databaseUtils = new DatabaseUtils(reactiveMongoTemplate, yamlConfig, measurementRepository, mongoTemplate)
 
     def "should prepare valid collection options object"() {
         given:

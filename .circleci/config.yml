@@ -38,12 +38,12 @@ jobs:
         - ~/.gradle
         key: v1-dependencies-{{ checksum "build.gradle" }}
 
+    - setup_remote_docker
+
     # run tests!
     - run:
-        name: Build project with test coverage
-        command: ./gradlew build --stacktrace jacocoTestReport
-
-    - setup_remote_docker
+      name: Build project with test coverage
+      command: ./gradlew build --stacktrace jacocoTestReport
 
     - run:
         name: Build and deploy Docker image

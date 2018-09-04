@@ -29,7 +29,7 @@ dependencies {
     testImplementation("org.spockframework:spock-core:$spockVersion")
     testImplementation("org.spockframework:spock-spring:$spockVersion")
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:$flapdoodleVersion")
+    testImplementation("org.testcontainers:spock:$testcontainersVersion")
 }
 
 jacocoTestReport {

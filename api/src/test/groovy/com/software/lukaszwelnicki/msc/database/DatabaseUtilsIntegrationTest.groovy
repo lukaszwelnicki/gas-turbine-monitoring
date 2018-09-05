@@ -1,24 +1,15 @@
 package com.software.lukaszwelnicki.msc.database
 
-
+import com.software.lukaszwelnicki.msc.TestcontainersConfig
 import com.software.lukaszwelnicki.msc.measurements.MeasurementCollections
 import com.software.lukaszwelnicki.msc.measurements.MeasurementRepositoryMap
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
-import org.springframework.test.context.ActiveProfiles
-import org.testcontainers.containers.FixedHostPortGenericContainer
-import org.testcontainers.containers.GenericContainer
-import org.testcontainers.spock.Testcontainers
 import spock.lang.Shared
-import spock.lang.Specification
 
 import java.util.stream.Collectors
 
-@ActiveProfiles("test")
-@SpringBootTest
-@Testcontainers
-class DatabaseUtilsIntegrationTest extends Specification {
+class DatabaseUtilsIntegrationTest extends TestcontainersConfig {
 
     @Autowired
     ReactiveMongoTemplate reactiveMongoTemplate
@@ -28,10 +19,6 @@ class DatabaseUtilsIntegrationTest extends Specification {
 
     @Autowired
     MeasurementRepositoryMap repositories
-    
-    @Shared
-    public GenericContainer mongo = new FixedHostPortGenericContainer('mongo:latest')
-            .withFixedExposedPort(27019, 27017)
 
     @Shared
     static def collectionNamesRequired = Arrays.stream(MeasurementCollections.values())

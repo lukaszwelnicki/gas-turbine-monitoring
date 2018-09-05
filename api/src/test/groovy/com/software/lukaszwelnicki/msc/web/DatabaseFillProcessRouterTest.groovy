@@ -1,6 +1,6 @@
 package com.software.lukaszwelnicki.msc.web
 
-import com.software.lukaszwelnicki.msc.IntegrationTestConfig
+import com.software.lukaszwelnicki.msc.TestConfig
 import com.software.lukaszwelnicki.msc.database.FillProcessStatus
 import com.software.lukaszwelnicki.msc.measurements.documents.AftBMT
 import com.software.lukaszwelnicki.msc.service.DatabaseFillProcessService
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono
 import spock.lang.Specification
 
 @WebFluxTest(DatabaseFillProcessRouter)
-@Import(IntegrationTestConfig)
+@Import(TestConfig)
 class DatabaseFillProcessRouterTest extends Specification {
 
     @Autowired

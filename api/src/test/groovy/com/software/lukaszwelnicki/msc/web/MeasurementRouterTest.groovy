@@ -1,6 +1,6 @@
 package com.software.lukaszwelnicki.msc.web
 
-import com.software.lukaszwelnicki.msc.IntegrationTestConfig
+import com.software.lukaszwelnicki.msc.TestConfig
 import com.software.lukaszwelnicki.msc.measurements.documents.AftBMT
 import com.software.lukaszwelnicki.msc.measurements.documents.Measurement
 import com.software.lukaszwelnicki.msc.service.MeasurementService
@@ -17,7 +17,7 @@ import spock.lang.Specification
 import java.time.Duration
 
 @WebFluxTest(MeasurementRouter)
-@Import(IntegrationTestConfig)
+@Import(TestConfig)
 class MeasurementRouterTest extends Specification {
 
     @Autowired

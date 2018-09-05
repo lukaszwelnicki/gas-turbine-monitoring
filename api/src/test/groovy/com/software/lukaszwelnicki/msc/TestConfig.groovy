@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean
 import spock.mock.DetachedMockFactory
 
 @TestConfiguration
-class IntegrationTestConfig {
+class TestConfig {
 
     def mockFactory = new DetachedMockFactory()
 

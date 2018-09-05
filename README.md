@@ -42,6 +42,12 @@ where {collection_name} should be replaced with one of the following:
 If the database fill process is running, data should be streamed from MongoDB thanks to tailable cursors 
 and Server-Sent Events
 
+# Tests execution
+Testcontainers framework was used to provide mongoDB Docker container for the purpose of integration testing.
+
+# Continuous Integration
+CI has been established using CircleCI. Creating an Docker image out of the Springboot app and pushing it to Docker-Hub has been integrated into CI cycle. 
+
 # Technologies used
 
 - Spring Boot 2.0
@@ -49,5 +55,6 @@ and Server-Sent Events
 - Project Reactor
 - Vavr.io
 - SpockFramework
+- Testcontainers
 - MongoDB
 - Java 1.8

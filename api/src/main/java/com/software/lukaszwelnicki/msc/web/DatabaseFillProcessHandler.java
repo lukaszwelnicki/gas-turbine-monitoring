@@ -3,6 +3,7 @@ package com.software.lukaszwelnicki.msc.web;
 import com.software.lukaszwelnicki.msc.database.FillProcessStatus;
 import com.software.lukaszwelnicki.msc.service.DatabaseFillProcessService;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
@@ -22,12 +23,14 @@ public class DatabaseFillProcessHandler implements WebFluxConfigurer {
 
     private final DatabaseFillProcessService fillProcessService;
 
+    @NotNull
     Mono<ServerResponse> startFillingDatabase(ServerRequest serverRequest) {
         return Optional.ofNullable(fillProcessService.startDatabaseFillProcess())
-                .map(d -> getServerResponseWithBody())
+                .map(fillProcess -> getServerResponseWithBody())
                 .orElse(badRequest().build());
     }
 
+    @NotNull
     Mono<ServerResponse> stopFillingDatabase(ServerRequest serverRequest) {
         fillProcessService.killDatabaseFillProcess();
         return getServerResponseWithBody();

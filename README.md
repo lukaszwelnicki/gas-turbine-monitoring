@@ -1,6 +1,4 @@
-[![CircleCI](https://circleci.com/gh/lukaszwelnicki/gas-turbine-monitoring.svg?style=svg)](https://circleci.com/gh/lukaszwelnicki/gas-turbine-monitoring)
-
-[![codecov](https://codecov.io/gh/lukaszwelnicki/gas-turbine-monitoring/branch/master/graph/badge.svg)](https://codecov.io/gh/lukaszwelnicki/gas-turbine-monitoring)
+[![CircleCI](https://circleci.com/gh/lukaszwelnicki/gas-turbine-monitoring.svg?style=svg)](https://circleci.com/gh/lukaszwelnicki/gas-turbine-monitoring)   [![codecov](https://codecov.io/gh/lukaszwelnicki/gas-turbine-monitoring/branch/master/graph/badge.svg)](https://codecov.io/gh/lukaszwelnicki/gas-turbine-monitoring)
 
 # gas-turbine-monitoring
 

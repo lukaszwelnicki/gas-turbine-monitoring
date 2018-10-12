@@ -21,6 +21,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.codehaus.groovy:groovy-all:$groovyVersion")
     implementation("io.vavr:vavr:$vavrVersion")
+    implementation("org.jetbrains:annotations:$jetbrainsAnnotationsVersion")
 
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")

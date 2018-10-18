@@ -9,10 +9,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomUtils {
 
     public static double randomMiddleAndSpread(double middleValue, double spread) {
-        if (spread < 0) {
+        if (spread <= 0) {
             throw new IllegalArgumentException("Spread value should be greater than 0.");
         }
-        double randomDouble = (ThreadLocalRandom.current().nextDouble() * spread) + middleValue - spread / 2;
+        double randomDouble = (ThreadLocalRandom.current().nextDouble(middleValue - spread / 2, middleValue + spread / 2));
         BigDecimal bd = BigDecimal.valueOf(randomDouble).setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }

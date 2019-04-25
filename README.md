@@ -54,5 +54,10 @@ CI has been established using CircleCI. Creating an Docker image out of the Spri
 - Vavr.io
 - SpockFramework
 - Testcontainers
-- MongoDB
+- MongoDB with tailable cursors
 - Java 1.8
+- Server-Sent Events
+- Docker / Docker Compose
+- Gradle
+- CircleCI
+- JaCoCo
